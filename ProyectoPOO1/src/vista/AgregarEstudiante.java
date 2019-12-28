@@ -1,23 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
+
 
 /**
  *
  * @author Andrés Pérez Bonilla
  */
 public class AgregarEstudiante extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AgregarEstudiante
-     */
-    public AgregarEstudiante() {
-        initComponents();
-    }
-
+  public AgregarEstudiante() {
+    initComponents();
+  }
+  
+  
+  public boolean validarDatos(){
+    String carnet = txtCarnet.getText();
+    String nombre = txtNombre.getText();
+    String primerApellido = txtPrimerApellido.getText();
+    String segundoApellido = txtSegundoApellido.getText();
+    String correo = txtSegundoApellido.getText();
+    String telefono = txtTelefono.getText();
+    //String carrera = cbCarrera..;
+    return true;
+  }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -194,7 +200,7 @@ public class AgregarEstudiante extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btRegistrarEstudiante;
+    public javax.swing.JButton btRegistrarEstudiante;
     private javax.swing.JComboBox<String> cbCarrera;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbCarnet;
