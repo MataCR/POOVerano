@@ -14,7 +14,8 @@ public class ConexionSQL extends javax.swing.JFrame{
 
   public static Connection getConexionSQL() throws SQLException, ClassNotFoundException {
     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); 
-    String urlConexion = "jdbc:sqlserver://localhost:1433; databaseName=LabMVC8;user=usuarioPOO;password=1234";
+    String urlConexion = "jdbc:sqlserver://localhost:1433; databaseName=PrimerProyectoProgramado7;"
+        + "user=usuarioPOO;password=1234";
     ConexionSQL.CON = DriverManager.getConnection(urlConexion);
     return CON;
   }
