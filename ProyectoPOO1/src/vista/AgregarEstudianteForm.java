@@ -5,24 +5,50 @@ package vista;
  *
  * @author Andrés Pérez Bonilla
  */
-public class AgregarEstudiante extends javax.swing.JFrame {
-  public AgregarEstudiante() {
+public class AgregarEstudianteForm extends javax.swing.JFrame {
+  public AgregarEstudianteForm() {
     initComponents();
   }
+
   
-  
-  public boolean validarDatos(){
+  public boolean validarDatosCompletos(){
     String carnet = txtCarnet.getText();
+    String correo = txtCorreo.getText();
     String nombre = txtNombre.getText();
-    String primerApellido = txtPrimerApellido.getText();
-    String segundoApellido = txtSegundoApellido.getText();
-    String correo = txtSegundoApellido.getText();
     String telefono = txtTelefono.getText();
-    //String carrera = cbCarrera..;
+    String primerApellido = txtPrimerApellido.getText();
+    String carrera = (String) cbCarrera.getSelectedItem();
+    String segundoApellido = txtSegundoApellido.getText();
+    return (carnet!=null || correo!=null || nombre!=null || telefono!=null|| primerApellido!=null
+        || segundoApellido!=null || carrera!=null);
+  }
+
+  
+  public boolean validarDatosEnteros(){
+    String carnet = txtCarnet.getText();
+    String telefono = txtTelefono.getText();
+    try {
+      int carnetEntero = Integer.parseInt(carnet);
+      int telefonoEntero = Integer.parseInt(telefono);
+    }
+    catch(Exception e) {
+      return false;
+    }
     return true;
   }
-    
-    
+  
+  
+  public boolean validarDatosCorreo(){
+    String correo = txtSegundoApellido.getText(); 
+    return correo.contains("@");
+  }
+  
+  
+  public void cancelarRegistroEstudiante(){
+    GestionEstudiantes cancelacionRegistro= new GestionEstudiantes();
+    cancelacionRegistro.setVisible(true);
+    this.dispose();
+  }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +76,7 @@ public class AgregarEstudiante extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         lbCarrera = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -80,6 +107,8 @@ public class AgregarEstudiante extends javax.swing.JFrame {
 
         lbCarrera.setText("Carrera");
 
+        jButton1.setText("Volver");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,24 +125,27 @@ public class AgregarEstudiante extends javax.swing.JFrame {
                     .addComponent(lbCarrera))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(142, 142, 142))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(cbCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(42, 42, 42)
-                            .addComponent(btRegistrarEstudiante)
-                            .addContainerGap()))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(142, 142, 142))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCarnet)
+                                    .addComponent(txtNombre)
+                                    .addComponent(txtPrimerApellido)
+                                    .addComponent(txtSegundoApellido)
+                                    .addComponent(txtCorreo)
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(42, 42, 42)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCarnet)
-                            .addComponent(txtNombre)
-                            .addComponent(txtPrimerApellido)
-                            .addComponent(txtSegundoApellido)
-                            .addComponent(txtCorreo)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE))
-                        .addGap(119, 119, 119))))
+                            .addComponent(btRegistrarEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,21 +172,23 @@ public class AgregarEstudiante extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCorreo)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTelefono)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btRegistrarEstudiante)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbTelefono)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbCarrera))
-                        .addContainerGap(32, Short.MAX_VALUE))))
+                        .addContainerGap(32, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btRegistrarEstudiante)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton1)
+                        .addContainerGap())))
         );
 
         pack();
@@ -181,27 +215,29 @@ public class AgregarEstudiante extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarEstudianteForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarEstudianteForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarEstudianteForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarEstudianteForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarEstudiante().setVisible(true);
+                new AgregarEstudianteForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btRegistrarEstudiante;
-    private javax.swing.JComboBox<String> cbCarrera;
+    public javax.swing.JComboBox<String> cbCarrera;
+    public javax.swing.JButton jButton1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbCarnet;
     private javax.swing.JLabel lbCarrera;
@@ -211,11 +247,11 @@ public class AgregarEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel lbSegundoApellido;
     private javax.swing.JLabel lbTelefono;
     private javax.swing.JLabel lbTitulo;
-    private javax.swing.JTextField txtCarnet;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrimerApellido;
-    private javax.swing.JTextField txtSegundoApellido;
-    private javax.swing.JTextField txtTelefono;
+    public javax.swing.JTextField txtCarnet;
+    public javax.swing.JTextField txtCorreo;
+    public javax.swing.JTextField txtNombre;
+    public javax.swing.JTextField txtPrimerApellido;
+    public javax.swing.JTextField txtSegundoApellido;
+    public javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

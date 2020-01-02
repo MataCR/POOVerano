@@ -4,10 +4,12 @@ package controlador;
 import dao.EstudianteDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-//import javax.swing.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.Estudiante;
-import vista.AgregarEstudiante;
+import vista.AgregarEstudianteForm;
 
 
 /**
@@ -15,12 +17,12 @@ import vista.AgregarEstudiante;
  * @author Andrés Pérez Bonilla
  */
 public class ControladorEstudiante implements ActionListener {
-  public AgregarEstudiante vista;
+  public AgregarEstudianteForm vista;
   public EstudianteDAO dao;
   public Estudiante modelo;
   
   
-  public ControladorEstudiante(AgregarEstudiante pVista, Estudiante pModelo){
+  public ControladorEstudiante(AgregarEstudianteForm pVista, Estudiante pModelo){
     vista = pVista;
     modelo = pModelo;
     EstudianteDAO dao= new EstudianteDAO();
@@ -28,52 +30,62 @@ public class ControladorEstudiante implements ActionListener {
   }
   
   
-  public void actionPerformed(ActionEvent e) {    
-    switch(e.getActionCommand()) {
-      case "Iniciar logIn":
-      //  logIn();
-        break;
-      
-      case "Cancelar logIn":
-        //cerrarVentanaLogin();
-        break;
-      
-      default:
-        break;
+  public void actionPerformed(ActionEvent e){    
+    try{
+      switch(e.getActionCommand()) {
+        case "Registrar":
+          agregarEstudiante();
+          break;
+        case "Volver":
+          cerrarVentanaRegistroEstudiantes();
+          break;
+        default:
+          break;
+      }
+    }
+    catch (SQLException ex) {
+      Logger.getLogger(ControladorEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+    catch (ClassNotFoundException ex) {
+      Logger.getLogger(ControladorEstudiante.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
   
   
-  public void agregarEstudiante(){
-        
-  }
-
-  /*
-    public void logIn() {
-        if (vista.logInDatosCorrectos() == true) {
-            String nombreUsuario = vista.txtNombreUsuario.getText();
-            String contraseña = vista.txtContrasena.getText();
-            modelo = new Usuario(nombreUsuario, contraseña);
-            Usuario usuarioActual = dao.iniciarSesion(modelo);
-            if (usuarioActual != null) {            
-                vista.setVisible(false);
-
-                // Dependiendo del tipo de usuario se puede abrir una                          
-
-                //  vista diferente
-               JOptionPane.showMessageDialog(vista, "Bienvenido: " +
-                modelo.getNombre());
-                vista.setVisible(true);
-            }
-            else {
-               JOptionPane.showMessageDialog(vista, "El usuario indicado no existe");
-        }
-        else {
-            JOptionPane.showMessageDialog(vista, "Todos lo datos son requeridos");
-        }
-
+  public void agregarEstudiante() throws SQLException, ClassNotFoundException{
+    if(vista.validarDatosCorreo() == false) {
+      JOptionPane.showMessageDialog(vista, "Debe ingresar una dirección de correo");
+    } 
+    if(vista.validarDatosCompletos() == false) {
+      JOptionPane.showMessageDialog(vista, "Debe completar todos los campos mostrados");
     }
-
-*/
+    if(vista.validarDatosEnteros()== false) {
+      JOptionPane.showMessageDialog(vista, "El carnet y el télefono deben ser números enteros");
+    }
+    String carnetString = vista.txtCarnet.getText();
+    int carnet = Integer.parseInt(carnetString);
+    String correo = vista.txtCorreo.getText();
+    String nombre = vista.txtNombre.getText();
+    String telefonoString = vista.txtTelefono.getText();
+    int telefono = Integer.parseInt(telefonoString);
+    String primerApellido = vista.txtPrimerApellido.getText();
+    String segundoApellido = vista.txtSegundoApellido.getText();
+    int idCarrera = vista.cbCarrera.getSelectedIndex() + 1;
+    modelo = new Estudiante(carnet, nombre, primerApellido, segundoApellido, correo, idCarrera, 
+        telefono);
+    
+    // VERIFICAR QUE NO SE INSERTE DOS VECES
+    boolean estudianteActual = dao.agregarOrganizador(modelo);
+    if (estudianteActual){
+      dao.agregarOrganizador(modelo);
+    }
+    else{
+      JOptionPane.showMessageDialog(vista, "Ha ocurrido un error de conexión");
+    }
+  }
   
+  
+  public void cerrarVentanaRegistroEstudiantes() {
+    vista.cancelarRegistroEstudiante();
+  }
 }

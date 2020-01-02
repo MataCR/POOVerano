@@ -14,7 +14,7 @@ import modelo.Estudiante;
 public class EstudianteDAO {
   private static ResultSet resultadoConsulta;
   
-  private boolean agregarOrganizador(Estudiante organizador) throws SQLException,
+  public boolean agregarOrganizador(Estudiante organizador) throws SQLException,
       ClassNotFoundException {
     try {
       CallableStatement entry = ConexionSQL.getConexionSQL().prepareCall("{call agregarOrganizador"

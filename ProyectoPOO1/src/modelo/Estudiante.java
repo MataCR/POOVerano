@@ -26,7 +26,6 @@ public class Estudiante {
     this.idCarrera = pIdCarrera;
     this.telefono = pTelefono;
   }
-
   
   public int getCarnet() {
     return this.carnet;
