@@ -6,8 +6,12 @@ package vista;
  * @author Andrés Pérez Bonilla
  */
 public class AgregarEstudianteForm extends javax.swing.JFrame {
+ // ControladorAgregarEstudianteForm controlador ;
+    
   public AgregarEstudianteForm() {
+//    controlador = new ControladorAgregarEstudianteForm(this);
     initComponents();
+ //   controlador.cargarCarreras();
   }
 
   
@@ -19,11 +23,11 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
     String primerApellido = txtPrimerApellido.getText();
     String carrera = (String) cbCarrera.getSelectedItem();
     String segundoApellido = txtSegundoApellido.getText();
-    return (carnet!=null || correo!=null || nombre!=null || telefono!=null|| primerApellido!=null
-        || segundoApellido!=null || carrera!=null);
+    return (carnet.length()!=0 || correo.length()!=0 || nombre.length()!=0 || telefono.length()!=0
+        || primerApellido.length()!=0 || segundoApellido.length()!=0 || carrera.length()!=0);
   }
-
   
+
   public boolean validarDatosEnteros(){
     String carnet = txtCarnet.getText();
     String telefono = txtTelefono.getText();
@@ -45,10 +49,11 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
   
   
   public void cancelarRegistroEstudiante(){
-    GestionEstudiantes cancelacionRegistro= new GestionEstudiantes();
+    Menu cancelacionRegistro= new Menu();
     cancelacionRegistro.setVisible(true);
     this.dispose();
   }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,7 +81,7 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         lbCarrera = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btVolver = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -103,11 +108,9 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
 
         lbTelefono.setText("Telefono");
 
-        cbCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         lbCarrera.setText("Carrera");
 
-        jButton1.setText("Volver");
+        btVolver.setText("Volver");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,7 +147,7 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
                                 .addGap(42, 42, 42)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btRegistrarEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -187,7 +190,7 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btRegistrarEstudiante)
                         .addGap(34, 34, 34)
-                        .addComponent(jButton1)
+                        .addComponent(btVolver)
                         .addContainerGap())))
         );
 
@@ -236,8 +239,8 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btRegistrarEstudiante;
+    public javax.swing.JButton btVolver;
     public javax.swing.JComboBox<String> cbCarrera;
-    public javax.swing.JButton jButton1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbCarnet;
     private javax.swing.JLabel lbCarrera;

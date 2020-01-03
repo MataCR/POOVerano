@@ -14,7 +14,9 @@ public class Estudiante {
   private int idCarrera; 
   private int telefono; 
   
+  public Estudiante(){
   
+  }
   public Estudiante(int pCarnet, String pNombre, String pPrimerApellido, String pSegundoApellido, 
         String pCorreo, int pIdCarrera, int pTelefono) {
     this.carnet = pCarnet;
