@@ -9,6 +9,7 @@ package dao;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import modelo.Sala;
 
 /**
@@ -32,5 +33,35 @@ public class SalaDAO {
       return false;
     }
     return true;    
+  }
+  
+  
+  public ArrayList<Sala> consultarSalasMasUtilizadas()throws SQLException,
+      ClassNotFoundException{
+    resultadoConsulta = ConexionSQL.createConsult("exec salasDisp "+";");
+    ArrayList<Sala> salas = new ArrayList<Sala>();
+    while (resultadoConsulta.next()) {
+       
+      String idSala = resultadoConsulta.getString(1);
+      String ubicacion = resultadoConsulta.getString(2);
+      int capacidad = resultadoConsulta.getInt(3);
+      String estado = resultadoConsulta.getString(4);
+      Sala sala = new Sala(idSala, ubicacion, capacidad, estado);
+      salas.add(sala);
+    }
+    return salas;
+  }
+  
+  
+  public ArrayList<String> cargarComboRecursos()throws SQLException,
+      ClassNotFoundException{
+    resultadoConsulta = ConexionSQL.createConsult("exec recursos "+";");
+    ArrayList<String> recursos = new ArrayList<String>();
+    while (resultadoConsulta.next()) {
+       
+      String recurso = resultadoConsulta.getString(2);
+      recursos.add(recurso);
+    }
+    return recursos;
   }
 }

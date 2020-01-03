@@ -20,16 +20,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import vista.AgregarEstudianteForm;
-import vista.Reportes;
+import vista.Reporte;
 /**
  *
  * @author Mata
  */
 public class ControladorGraficos {
   GraficosDAO dao;
-  public Reportes vista;
+  public Reporte vista;
 
-  public ControladorGraficos(Reportes pVista){
+  public ControladorGraficos(Reporte pVista){
     vista = pVista;
     dao= new GraficosDAO();
   }

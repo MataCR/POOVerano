@@ -18,11 +18,11 @@ public class Sala {
   private String estado;
   private int califacion;
 
-    public Sala(String ubicacion, int capacidad, int numero) {
-        this.ubicacion = ubicacion;
-        this.capacidad = capacidad;
-        this.numero = numero;
-    }
+  public Sala(String ubicacion, int capacidad, int numero) {
+    this.ubicacion = ubicacion;
+    this.capacidad = capacidad;
+    this.numero = numero;
+  }
 
   
   public Sala(String idSala, String ubicacion, int capacidad, String estado) {
@@ -30,7 +30,6 @@ public class Sala {
     this.ubicacion = ubicacion;
     this.capacidad = capacidad;
     this.estado = estado;
-    this.califacion = 100;
   }
 
   
