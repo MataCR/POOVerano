@@ -19,7 +19,30 @@ public class AgregarSalaForm extends javax.swing.JFrame {
     public AgregarSalaForm() {
         initComponents();
     }
-
+    
+    public boolean validarDatosCompletos(){
+        String ubicacion = txtUbicacion.getText();
+        return (ubicacion!=null);
+    }
+    
+    public boolean validarDatosEnteros(){
+        String capacidad = txtCapacidad.getText();
+        String numero = txtNumero.getText();
+        try{
+            int capacidadEntero = Integer.parseInt(capacidad);
+            int numeroEntero = Integer.parseInt(numero);
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+    
+    public void cancelarRegistroSala(){
+        GestionSalas cancelacionRegistro= new GestionSalas();
+        cancelacionRegistro.setVisible(true);
+        this.dispose();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,17 +55,16 @@ public class AgregarSalaForm extends javax.swing.JFrame {
         lbTitulo = new javax.swing.JLabel();
         lbUbicacion = new javax.swing.JLabel();
         lbCapacidad = new javax.swing.JLabel();
-        lbEstado = new javax.swing.JLabel();
-        lbCalificacion = new javax.swing.JLabel();
         lbHorario = new javax.swing.JLabel();
         txtUbicacion = new javax.swing.JTextField();
         txtCapacidad = new javax.swing.JTextField();
-        txtCalificacion = new javax.swing.JTextField();
         cbxHorario = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         horariosTable = new javax.swing.JTable();
-        cbxEstado = new javax.swing.JComboBox<>();
-        btnAgregar = new javax.swing.JButton();
+        btnAgregarSala = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
+        lbNumero = new javax.swing.JLabel();
+        txtNumero = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,10 +74,6 @@ public class AgregarSalaForm extends javax.swing.JFrame {
         lbUbicacion.setText("Ubicacion");
 
         lbCapacidad.setText("Capacidad");
-
-        lbEstado.setText("Estado");
-
-        lbCalificacion.setText("Calificacion");
 
         lbHorario.setText("Horario");
 
@@ -74,14 +92,16 @@ public class AgregarSalaForm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(horariosTable);
 
-        cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btnAgregar.setText("Agregar Sala");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarSala.setText("Agregar Sala");
+        btnAgregarSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnAgregarSalaActionPerformed(evt);
             }
         });
+
+        btnVolver.setText("Volver");
+
+        lbNumero.setText("Numero Sala");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,27 +112,28 @@ public class AgregarSalaForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbEstado)
-                            .addComponent(lbCalificacion)
                             .addComponent(lbHorario)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(lbUbicacion)
-                                .addComponent(lbCapacidad)))
-                        .addGap(43, 43, 43)
+                                .addComponent(lbCapacidad))
+                            .addComponent(lbNumero))
+                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxHorario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxHorario, 0, 116, Short.MAX_VALUE)
                             .addComponent(txtCapacidad)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(cbxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCalificacion))
+                            .addComponent(txtNumero)
+                            .addComponent(txtUbicacion))
                         .addGap(29, 29, 29))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbTitulo)
-                            .addComponent(btnAgregar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAgregarSala, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(lbTitulo)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -126,7 +147,7 @@ public class AgregarSalaForm extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 7, Short.MAX_VALUE)
+                        .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(lbTitulo)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -136,34 +157,27 @@ public class AgregarSalaForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbCapacidad))
-                        .addGap(18, 18, 18)
+                        .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbEstado)
-                            .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbCalificacion)
-                            .addComponent(txtCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbNumero)
+                            .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbHorario))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnAgregarSala)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAgregar)
-                        .addGap(29, 29, 29))))
+                        .addComponent(btnVolver)
+                        .addGap(31, 31, 31))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-      String ubicacion =  txtUbicacion.getText();
-      int capacidad =  Integer.parseInt(txtCapacidad.getText());
-      //String estado =  cbxEstado.getSelectedItem();
-      int calificacion =  Integer.parseInt(txtCalificacion.getText());
-      //Horario horario =  cbxHorario.getSelectedItem();
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    private void btnAgregarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSalaActionPerformed
+
+    }//GEN-LAST:event_btnAgregarSalaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,19 +216,18 @@ public class AgregarSalaForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JComboBox<String> cbxEstado;
-    private javax.swing.JComboBox<String> cbxHorario;
-    private javax.swing.JTable horariosTable;
+    public javax.swing.JButton btnAgregarSala;
+    public javax.swing.JButton btnVolver;
+    public javax.swing.JComboBox<String> cbxHorario;
+    public javax.swing.JTable horariosTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbCalificacion;
     private javax.swing.JLabel lbCapacidad;
-    private javax.swing.JLabel lbEstado;
     private javax.swing.JLabel lbHorario;
+    private javax.swing.JLabel lbNumero;
     private javax.swing.JLabel lbTitulo;
     private javax.swing.JLabel lbUbicacion;
-    private javax.swing.JTextField txtCalificacion;
-    private javax.swing.JTextField txtCapacidad;
-    private javax.swing.JTextField txtUbicacion;
+    public javax.swing.JTextField txtCapacidad;
+    public javax.swing.JTextField txtNumero;
+    public javax.swing.JTextField txtUbicacion;
     // End of variables declaration//GEN-END:variables
 }

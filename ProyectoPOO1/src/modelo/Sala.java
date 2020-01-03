@@ -11,12 +11,18 @@ package modelo;
  */
 public class Sala {
 
-    
+  private int numero;
   private String idSala;
   private String ubicacion;
   private int capacidad;
   private String estado;
   private int califacion;
+
+    public Sala(String ubicacion, int capacidad, int numero) {
+        this.ubicacion = ubicacion;
+        this.capacidad = capacidad;
+        this.numero = numero;
+    }
 
   
   public Sala(String idSala, String ubicacion, int capacidad, String estado) {
@@ -37,7 +43,14 @@ public class Sala {
     this.idSala = idSala;
   }
 
-  
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+    
   public String getUbicacion() {
     return ubicacion;
   }
