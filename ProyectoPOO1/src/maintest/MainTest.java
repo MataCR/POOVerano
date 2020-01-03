@@ -1,18 +1,23 @@
 package maintest;
 
 
-import dao.ConexionSQL;
-import dao.SalaDAO;
-import java.sql.SQLException;
+import controlador.ControladorUsuario;
+import vista.LogInForm;
+import modelo.Usuario;
+
+
+
 /**
  *
  * @author Andrés Pérez Bonilla
  */
 public class MainTest {
-  public static void main(String[] args) throws SQLException, ClassNotFoundException{
-    ConexionSQL.getConexionSQL();
-    SalaDAO x = new SalaDAO();
-      System.out.println(x.cargarComboRecursos().toString());
-    
+
+  public static void main(String[] args) {
+    LogInForm vista = new LogInForm();
+    Usuario modelo = new Usuario();
+    ControladorUsuario controladorUsuario = new ControladorUsuario(vista);
+    controladorUsuario.vista.setVisible(true);
+    controladorUsuario.vista.setLocationRelativeTo(null);
   }  
 }
