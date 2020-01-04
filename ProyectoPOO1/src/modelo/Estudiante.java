@@ -1,5 +1,11 @@
 package modelo;
 
+//NO OLVIDAR METODOS ACCESORES NI EQULAS NI CONSTRUCTOR SOBRECARGADO NI VACIO
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
+
+
 /**
  *
  * @author Xtreme
@@ -9,14 +15,18 @@ public class Estudiante {
   private String primerApellido; 
   private String segundoApellido; 
   private String correo;
+  private String carrera;
+  private ArrayList<Reserva> reservasEstudiante = new ArrayList<Reserva>();
   private int carnet;
   private int calificacion; 
-  private int idCarrera; 
+  private int idCarrera;
   private int telefono; 
   
-  public Estudiante(){
   
+  public Estudiante(){
   }
+  
+  
   public Estudiante(int pCarnet, String pNombre, String pPrimerApellido, String pSegundoApellido, 
         String pCorreo, int pIdCarrera, int pTelefono) {
     this.carnet = pCarnet;
@@ -28,6 +38,34 @@ public class Estudiante {
     this.idCarrera = pIdCarrera;
     this.telefono = pTelefono;
   }
+  
+
+  public Estudiante(int pCarnet, String pNombre, String pPrimerApellido, String pSegundoApellido, 
+        String pCorreo,int pTelefono, int pCalificacion, String pCarrera) {
+    this.carnet = pCarnet;
+    this.nombre = pNombre;
+    this.primerApellido = pPrimerApellido;
+    this.segundoApellido = pSegundoApellido;
+    this.correo = pCorreo;
+    this.calificacion = pCalificacion;
+    this.telefono = pTelefono;
+    this.carrera = pCarrera;
+  }
+
+  
+  public Estudiante(int pCarnet, String pNombre, String pPrimerApellido, String pSegundoApellido, 
+        String pCorreo, String pCarrera, int pTelefono, ArrayList<Reserva> pReservasEstudiante) {
+    this.carnet = pCarnet;
+    this.nombre = pNombre;
+    this.primerApellido = pPrimerApellido;
+    this.segundoApellido = pSegundoApellido;
+    this.correo = pCorreo;
+    this.calificacion = 100;
+    this.carrera = pCarrera;
+    this.telefono = pTelefono;
+    this.reservasEstudiante = pReservasEstudiante;
+  }
+  
   
   public int getCarnet() {
     return this.carnet;
@@ -107,4 +145,23 @@ public class Estudiante {
   public void setTelefono(int pTelefono) {
     this.telefono = pTelefono;
   }
+  
+  public String getCarrera() {
+    return this.carrera;
+  }
+  
+  
+  public ArrayList<Reserva> getReservasEstudiante(){
+    return reservasEstudiante;
+  }
+  
+  
+  public ArrayList<Reserva> agregarReserva(int id, String asunto, Date fechaSolicitud,
+      Date fechaUso, Time horaInicio, Time horaFin, String idSala, String estado,
+      boolean isExitosa, ArrayList<Incidente> incidentes){
+    reservasEstudiante.add(new Reserva(id, asunto, fechaSolicitud, fechaUso, horaInicio, horaFin,
+        idSala, estado, isExitosa, incidentes));
+    return reservasEstudiante;
+  }
+
 }
