@@ -1,7 +1,8 @@
 package gestionador;
 
 
-import controlador.ControladorAgregarEstudianteForm;
+import controlador.ControladorAgregarEstudiante;
+import controlador.ControladorConsultaEstudiantes;
 import dao.EstudianteDAO;
 import dao.UsuarioDAO;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import modelo.Estudiante;
 import modelo.Usuario;
 import vista.AgregarEstudianteForm;
+import vista.ConsultarEstudiantesForm;
 import vista.Menu;
 
 
@@ -42,14 +44,21 @@ public class ControladorGestionador implements ActionListener {
       switch(e.getActionCommand()) {
           case "Agregar Estudiante":
               AgregarEstudianteForm estudianteVista = new AgregarEstudianteForm();
-              ControladorAgregarEstudianteForm controladorEstudiante = new 
-                  ControladorAgregarEstudianteForm(estudianteVista);
+              ControladorAgregarEstudiante controladorEstudiante = new 
+                  ControladorAgregarEstudiante(estudianteVista);
               controladorEstudiante.vista.setVisible(true);
               vista.setVisible(false);
               controladorEstudiante.vista.setLocationRelativeTo(null);
               controladorEstudiante.cargarCarreras();
               break;
           case "Consultar Estudiante":
+              ConsultarEstudiantesForm estudiantesConsultadosVista = new
+                  ConsultarEstudiantesForm();
+              ControladorConsultaEstudiantes controladorEstudiantesConsultados = new 
+                  ControladorConsultaEstudiantes(estudiantesConsultadosVista);   
+              controladorEstudiantesConsultados.vista.setVisible(true);
+              vista.setVisible(false);
+              controladorEstudiantesConsultados.vista.setLocationRelativeTo(null);
               break;
           default:
               break;
