@@ -52,15 +52,7 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
     }
     return false;
   }
-  
-  
-  public void cancelarRegistroEstudiante(){
-    Menu cancelacionRegistro= new Menu();
-    cancelacionRegistro.setVisible(true);
-    this.setVisible(false);
-    this.dispose();
-  }
-    
+      
     
     /**
      * This method is called from within the constructor to initialize the form.
