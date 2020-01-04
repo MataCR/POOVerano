@@ -9,7 +9,9 @@ package dao;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
+import modelo.Horario;
 import modelo.Sala;
 
 /**
@@ -64,4 +66,52 @@ public class SalaDAO {
     }
     return recursos;
   }
+  
+  public ArrayList<Horario> consultarHorariosDisponibles() throws SQLException,
+          ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec tablaHorarios;");
+      ArrayList<Horario> horarios = new ArrayList<Horario>();
+      while (resultadoConsulta.next()){
+          int idHorario = resultadoConsulta.getInt(1);
+          String dia = resultadoConsulta.getString(2);
+          Time horaApertura = resultadoConsulta.getTime(3);
+          Time horaCierre = resultadoConsulta.getTime(4);
+          
+          Horario horario = new Horario (idHorario,dia,horaApertura,horaCierre);
+          horarios.add(horario);
+      }
+      return horarios;
+  }
+  
+  public ArrayList<String> cargarComboHorarios() throws SQLException, ClassNotFoundException{
+    resultadoConsulta =  ConexionSQL.createConsult("exec consultarHorarios;");
+    ArrayList<String> horarios = new ArrayList<String>();
+    while (resultadoConsulta.next()) {
+      String horarioEncontrado = resultadoConsulta.getString(1);
+      horarios.add(horarioEncontrado);
+    }
+    return horarios;
+  }
+  
+  public Sala verificarSala(Sala sala) throws SQLException, ClassNotFoundException{
+      ArrayList <Sala> salas= cargarSalas();
+      int cantidad = salas.size();   
+      for (int i = 0; i<cantidad; i++){
+        if(sala.equals(salas.get(i))){
+            return sala;
+        }
+  }
+      return null;
+  }
+  
+  public ArrayList<Sala> cargarSalas() throws SQLException, ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec cargarSalas;");
+      ArrayList <Sala> salas = new ArrayList<Sala>();
+      while (resultadoConsulta.next()){
+          Sala salaEncontrada = new Sala(resultadoConsulta.getString(1));
+          salas.add(salaEncontrada);
+      }
+      return salas;
+  }
 }
+

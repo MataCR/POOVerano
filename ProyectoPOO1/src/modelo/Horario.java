@@ -9,31 +9,47 @@ import java.sql.Time;
  */
 public class Horario {
 
-
-  private Date dia;
+  private int idHorario;
+  private String dia;
   private Time horaApertura;
   private Time horaCierre;
 
     
-  public Horario(Date dia, Time horaApertura, Time horaCierre) {
+  public Horario(String dia, Time horaApertura, Time horaCierre) {
     this.dia = dia;
     this.horaApertura = horaApertura;
     this.horaCierre = horaCierre;
   }
 
+  public Horario(int idHorario, String dia, Time horaApertura, Time horaCierre) {
+    this.idHorario = idHorario;
+    this.dia = dia;
+    this.horaApertura = horaApertura;
+    this.horaCierre = horaCierre;
+  }
+
+  public int getIdHorario() {
+    return this.idHorario;
+  }
+
+  public void setIdHorario(int idHorario) {
+    this.idHorario = idHorario;
+  }
+
+
     
-  public Date getDia() {
-    return dia;
+  public String getDia() {
+    return this.dia;
   }
 
   
-  public void setDia(Date dia) {
+  public void setDia(String dia) {
     this.dia = dia;
   }
 
   
   public Time getHoraApertura() {
-    return horaApertura;
+    return this.horaApertura;
   }
 
   
@@ -43,16 +59,11 @@ public class Horario {
 
     
   public Time getHoraCierre() {
-    return horaCierre;
+    return this.horaCierre;
   }
 
   
   public void setHoraCierre(Time horaCierre) {
     this.horaCierre = horaCierre;
   }
-  
-  
-  
-  
-  
 }

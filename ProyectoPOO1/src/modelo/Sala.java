@@ -18,75 +18,83 @@ public class Sala {
   private String estado;
   private int califacion;
 
-  public Sala(String ubicacion, int capacidad, int numero) {
-    this.ubicacion = ubicacion;
-    this.capacidad = capacidad;
-    this.numero = numero;
+  public Sala() {
+  }
+
+    public Sala(String idSala) {
+        this.idSala = idSala;
+    }
+
+  
+  public Sala(String pUbicacion, int pCapacidad, int pNumero) {
+    this.ubicacion = pUbicacion;
+    this.capacidad = pCapacidad;
+    this.numero = pNumero;
   }
 
   
-  public Sala(String idSala, String ubicacion, int capacidad, String estado) {
-    this.idSala = idSala;
-    this.ubicacion = ubicacion;
-    this.capacidad = capacidad;
-    this.estado = estado;
+  public Sala(String pIdSala, String pUbicacion, int pCapacidad, String pEstado) {
+    this.idSala = pIdSala;
+    this.ubicacion = pUbicacion;
+    this.capacidad = pCapacidad;
+    this.estado = pEstado;
   }
 
   
   public String getIdSala() {
-    return idSala;
+    return this.idSala;
   }
 
   
-  public void setIdSala(String idSala) {
-    this.idSala = idSala;
+  public void setIdSala(String pIdSala) {
+    this.idSala = pIdSala;
   }
 
-    public int getNumero() {
-        return numero;
-    }
+  public int getNumero() {
+      return this.numero;
+  }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
+  public void setNumero(int pNumero) {
+    this.numero = pNumero;
+  }
     
   public String getUbicacion() {
-    return ubicacion;
+    return this.ubicacion;
   }
 
   
-  public void setUbicacion(String ubicacion) {
+  public void setUbicacion(String pUbicacion) {
     this.ubicacion = ubicacion;
   }
 
   
   public int getCapacidad() {
-    return capacidad;
+    return this.capacidad;
   }
 
   
-  public void setCapacidad(int capacidad) {
-    this.capacidad = capacidad;
+  public void setCapacidad(int pCapacidad) {
+    this.capacidad = pCapacidad;
   }
 
   
   public String getEstado() {
-    return estado;
+    return this.estado;
   }
 
   
-  public void setEstado(String estado) {
-    this.estado = estado;
+  public void setEstado(String pEstado) {
+    this.estado = pEstado;
   }
 
   
   public int getCalifacion() {
-    return califacion;
+    return this.califacion;
   }
 
   
-  public void setCalifacion(int califacion) {
-    this.califacion = califacion;
+  public void setCalifacion(int pCalifacion) {
+    this.califacion = pCalifacion;
   }
   
   

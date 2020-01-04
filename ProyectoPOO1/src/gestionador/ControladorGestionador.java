@@ -3,6 +3,8 @@ package gestionador;
 
 import controlador.ControladorAgregarEstudiante;
 import controlador.ControladorConsultaEstudiantes;
+import controlador.ControladorSala;
+import controlador.ControladorVerificacionSala;
 import dao.EstudianteDAO;
 import dao.UsuarioDAO;
 import java.awt.event.ActionEvent;
@@ -10,8 +12,10 @@ import java.awt.event.ActionListener;
 import modelo.Estudiante;
 import modelo.Usuario;
 import vista.AgregarEstudianteForm;
+import vista.AgregarSalaForm;
 import vista.ConsultarEstudiantesForm;
 import vista.Menu;
+import vista.ModificarSala;
 
 
 /**
@@ -59,6 +63,24 @@ public class ControladorGestionador implements ActionListener {
               controladorEstudiantesConsultados.vista.setVisible(true);
               vista.setVisible(false);
               controladorEstudiantesConsultados.vista.setLocationRelativeTo(null);
+              break;
+          case "Agregar Sala":
+              AgregarSalaForm salaVista = new AgregarSalaForm();
+              ControladorSala controladorSala = new 
+              ControladorSala(salaVista);
+              controladorSala.vista.setVisible(true);
+              vista.setVisible(false);
+              controladorSala.vista.setLocationRelativeTo(null);
+              controladorSala.cargarHorarios();
+              break;
+          case "Modificar Datos de Salas":
+              ModificarSala modificarVista = new ModificarSala();
+              ControladorVerificacionSala controladorModificar = new 
+              ControladorVerificacionSala(modificarVista);
+              controladorModificar.vista.setVisible(true);
+              vista.setVisible(false);
+              controladorModificar.vista.setLocationRelativeTo(null);
+              //controladorModificar.cargarCombo();
               break;
           default:
               break;

@@ -6,14 +6,19 @@
 package controlador;
 
 import dao.SalaDAO;
+import gestionador.ControladorGestionador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Horario;
 import modelo.Sala;
 import vista.AgregarSalaForm;
+import vista.Menu;
 
 
 /**
@@ -26,11 +31,12 @@ public class ControladorSala implements ActionListener{
   public Sala modelo;
   
   
-  public ControladorSala(AgregarSalaForm pVista, Sala pModelo){
+  public ControladorSala(AgregarSalaForm pVista){
     vista = pVista;
-    modelo = pModelo;
-    SalaDAO dao= new SalaDAO();
+    dao= new SalaDAO();
     this.vista.btnAgregarSala.addActionListener(this);
+    this.vista.btnVolver.addActionListener(this);
+    this.vista.btnCargarHorarios.addActionListener(this);
   }
   
   
@@ -41,17 +47,19 @@ public class ControladorSala implements ActionListener{
           agregarSala();
           break;
         case "Volver":
-          cerrarVentanaAgregarSalas();
+          cerrarVentanaAgregarSala();
           break;
+        case "Cargar Horarios":
+          llenarTablaHorarios();
         default:
           break;
       }
     }
     catch (SQLException ex) {
-      Logger.getLogger(ControladorEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(ControladorSala.class.getName()).log(Level.SEVERE, null, ex);
     } 
     catch (ClassNotFoundException ex) {
-      Logger.getLogger(ControladorEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(ControladorSala.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
   
@@ -60,28 +68,59 @@ public class ControladorSala implements ActionListener{
     if(vista.validarDatosCompletos() == false) {
       JOptionPane.showMessageDialog(vista, "Debe completar todos los campos mostrados");
     }
-    if(vista.validarDatosEnteros()== false) {
-      JOptionPane.showMessageDialog(vista, "El carnet y el télefono deben ser números enteros");
-    }
+//    if(vista.validarDatosEnteros()== false) {
+//      JOptionPane.showMessageDialog(vista, "El numero de sala y la capacidad deben ser números enteros");
+//    }
     String ubicacion = vista.txtUbicacion.getText();
     String capacidadString = vista.txtCapacidad.getText();
     int capacidad = Integer.parseInt(capacidadString);
     String numeroString = vista.txtNumero.getText();
     int numero = Integer.parseInt(numeroString);
-    modelo = new Sala(ubicacion,capacidad,numero);
     
-    // VERIFICAR QUE NO SE INSERTE DOS VECES
-    boolean estudianteActual = dao.agregarSala(modelo);
-    if (estudianteActual){
-      dao.agregarSala(modelo);
+    modelo = new Sala(ubicacion,capacidad,numero);
+    boolean salaActual = dao.agregarSala(modelo);
+    if (salaActual){
+      JOptionPane.showMessageDialog(vista, "La sala ha sido ingresada correctamente");
     }
     else{
       JOptionPane.showMessageDialog(vista, "Ha ocurrido un error de conexión");
     }
   }
   
+  public void cargarHorarios(){
+    try {
+      ArrayList<String> recursos = dao.cargarComboHorarios();
+      for (int i = 0; i < recursos.size(); i++) {
+        String recurso = recursos.get(i);
+        vista.cbxHorario.addItem(recurso);         
+      }    
+    } 
+    catch (Exception e) {
+      System.out.println(e);
+    }
+  }
   
-  public void cerrarVentanaAgregarSalas() {
-    vista.cancelarRegistroSala();
+    public void llenarTablaHorarios(){
+    try {
+        ArrayList<Horario> horarios = dao.consultarHorariosDisponibles();
+        DefaultTableModel tm=(DefaultTableModel)vista.horariosTable.getModel();
+        tm.setRowCount(0);
+        for (int i = 0; i < horarios.size(); i++) {
+           Object o[]= {horarios.get(i).getIdHorario(),horarios.get(i).getDia(),horarios.get(i).getHoraApertura()
+           ,horarios.get(i).getHoraCierre()};
+           tm.addRow(o);           
+        }               
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+  }
+  
+  
+ public void cerrarVentanaAgregarSala() {
+  Menu menuVista = new Menu();
+  ControladorGestionador controladorMenu = new ControladorGestionador(menuVista);
+  controladorMenu.vista.setVisible(true);
+  this.vista.setVisible(false);
+  controladorMenu.vista.setLocationRelativeTo(null); 
   }
 }

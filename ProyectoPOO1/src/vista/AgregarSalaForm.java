@@ -5,6 +5,7 @@
  */
 package vista;
 
+import controlador.ControladorSala;
 import modelo.Horario;
 
 /**
@@ -12,37 +13,42 @@ import modelo.Horario;
  * @author luisg
  */
 public class AgregarSalaForm extends javax.swing.JFrame {
-
+    ControladorSala controlador;
     /**
      * Creates new form AgregarSala
      */
     public AgregarSalaForm() {
         initComponents();
+        //controlador.llenarTablaHorarios();
     }
     
     public boolean validarDatosCompletos(){
         String ubicacion = txtUbicacion.getText();
-        return (ubicacion!=null);
-    }
-    
-    public boolean validarDatosEnteros(){
-        String capacidad = txtCapacidad.getText();
-        String numero = txtNumero.getText();
-        try{
-            int capacidadEntero = Integer.parseInt(capacidad);
-            int numeroEntero = Integer.parseInt(numero);
-        }
-        catch(Exception e){
+        if (ubicacion.length() == 0){
             return false;
         }
         return true;
     }
     
-    public void cancelarRegistroSala(){
-        GestionSalas cancelacionRegistro= new GestionSalas();
-        cancelacionRegistro.setVisible(true);
-        this.dispose();
-    }
+//    public boolean validarDatosEnteros(){
+//        String capacidad = txtCapacidad.getText();
+//        String numero = txtNumero.getText();
+//        try{
+//            int capacidadEntero = Integer.parseInt(capacidad);
+//            int numeroEntero = Integer.parseInt(numero);
+//        }
+//        catch(Exception e){
+//            return false;
+//        }
+//        return true;
+//    }
+    
+//  public void cancelarRegistroSala(){
+//    Menu cancelacionRegistroSala= new Menu();
+//    cancelacionRegistroSala.setVisible(true);
+//    this.setVisible(false);
+//    this.dispose();
+//  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,13 +64,14 @@ public class AgregarSalaForm extends javax.swing.JFrame {
         lbHorario = new javax.swing.JLabel();
         txtUbicacion = new javax.swing.JTextField();
         txtCapacidad = new javax.swing.JTextField();
-        cbxHorario = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         horariosTable = new javax.swing.JTable();
         btnAgregarSala = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         lbNumero = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
+        cbxHorario = new javax.swing.JComboBox<>();
+        btnCargarHorarios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,8 +84,6 @@ public class AgregarSalaForm extends javax.swing.JFrame {
 
         lbHorario.setText("Horario");
 
-        cbxHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         horariosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -87,7 +92,7 @@ public class AgregarSalaForm extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Dia", "Hora de Apertura", "Hora de Cierre"
             }
         ));
         jScrollPane1.setViewportView(horariosTable);
@@ -103,6 +108,14 @@ public class AgregarSalaForm extends javax.swing.JFrame {
 
         lbNumero.setText("Numero Sala");
 
+        cbxHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxHorarioActionPerformed(evt);
+            }
+        });
+
+        btnCargarHorarios.setText("Cargar Horarios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,22 +123,21 @@ public class AgregarSalaForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbHorario)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lbUbicacion)
-                                .addComponent(lbCapacidad))
-                            .addComponent(lbNumero))
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxHorario, 0, 116, Short.MAX_VALUE)
-                            .addComponent(txtCapacidad)
-                            .addComponent(txtNumero)
-                            .addComponent(txtUbicacion))
-                        .addGap(29, 29, 29))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbHorario)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lbUbicacion)
+                                        .addComponent(lbCapacidad))
+                                    .addComponent(lbNumero))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtCapacidad)
+                                    .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxHorario, javax.swing.GroupLayout.Alignment.LEADING, 0, 107, Short.MAX_VALUE)
+                                    .addComponent(txtUbicacion)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(97, 97, 97)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -134,20 +146,20 @@ public class AgregarSalaForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(87, 87, 87)
                                 .addComponent(lbTitulo)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnCargarHorarios)
+                        .addGap(10, 10, 10)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(lbTitulo)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -163,13 +175,15 @@ public class AgregarSalaForm extends javax.swing.JFrame {
                             .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbHorario))
+                            .addComponent(lbHorario)
+                            .addComponent(cbxHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addComponent(btnAgregarSala)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnVolver)
-                        .addGap(31, 31, 31))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCargarHorarios)))
+                .addContainerGap())
         );
 
         pack();
@@ -178,6 +192,10 @@ public class AgregarSalaForm extends javax.swing.JFrame {
     private void btnAgregarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarSalaActionPerformed
 
     }//GEN-LAST:event_btnAgregarSalaActionPerformed
+
+    private void cbxHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHorarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxHorarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,6 +224,8 @@ public class AgregarSalaForm extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -217,6 +237,7 @@ public class AgregarSalaForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAgregarSala;
+    public javax.swing.JButton btnCargarHorarios;
     public javax.swing.JButton btnVolver;
     public javax.swing.JComboBox<String> cbxHorario;
     public javax.swing.JTable horariosTable;
