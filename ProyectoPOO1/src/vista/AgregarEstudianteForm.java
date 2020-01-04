@@ -23,11 +23,14 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
     String primerApellido = txtPrimerApellido.getText();
     String carrera = (String) cbCarrera.getSelectedItem();
     String segundoApellido = txtSegundoApellido.getText();
-    return (carnet.length()!=0 || correo.length()!=0 || nombre.length()!=0 || telefono.length()!=0
-        || primerApellido.length()!=0 || segundoApellido.length()!=0 || carrera.length()!=0);
+    if (carnet.length()==0 || correo.length()==0 || nombre.length()==0 || telefono.length()==0
+        || primerApellido.length()==0 || segundoApellido.length()==0 || carrera.length()==0){
+      return false;
+    }
+    return true;
   }
   
-
+/*
   public boolean validarDatosEnteros(){
     String carnet = txtCarnet.getText();
     String telefono = txtTelefono.getText();
@@ -35,22 +38,26 @@ public class AgregarEstudianteForm extends javax.swing.JFrame {
       int carnetEntero = Integer.parseInt(carnet);
       int telefonoEntero = Integer.parseInt(telefono);
     }
-    catch(Exception e) {
+    catch(NumberFormatException e) {
       return false;
     }
     return true;
   }
-  
+  */
   
   public boolean validarDatosCorreo(){
     String correo = txtSegundoApellido.getText(); 
-    return correo.contains("@");
+    if (correo.contains("@")){
+      return true;
+    }
+    return false;
   }
   
   
   public void cancelarRegistroEstudiante(){
     Menu cancelacionRegistro= new Menu();
     cancelacionRegistro.setVisible(true);
+    this.setVisible(false);
     this.dispose();
   }
     
