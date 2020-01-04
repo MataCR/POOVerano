@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 /**
@@ -11,36 +6,38 @@ package modelo;
  */
 public class Incidente {
   
-
+  private int idReserva; 
   private String detalle;
-  private String tipo;
+  private int rebajoPuntos;
+
+    public int getIdReserva() {
+        return idReserva;
+    }
+
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
+    }
+    
+    public String getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
+    }
+
+    public int getRebajoPuntos() {
+        return rebajoPuntos;
+    }
+
+    public void setRebajoPuntos(int rebajoPuntos) {
+        this.rebajoPuntos = rebajoPuntos;
+    }
 
   
-  public Incidente(String detalle, String tipo) {
-    this.detalle = detalle;
-    this.tipo = tipo;
-  }
-
-  
-  public String getDetalle() {
-    return detalle;
-  }
-
-  
-  public void setDetalle(String detalle) {
-    this.detalle = detalle;
-  }
-
-  
-  public String getTipo() {
-    return tipo;
-  }
-
-  
-  public void setTipo(String tipo) {
-    this.tipo = tipo;
-  }
-  
-  
-  
+  public Incidente(int pIdReserva, String pDetalle, int pRebajoPuntos) {
+    this.idReserva = pIdReserva;
+    this.detalle = pDetalle;
+    this.rebajoPuntos = pRebajoPuntos;
+  } 
 }
