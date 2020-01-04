@@ -3,12 +3,14 @@ package controlador;
 import java.awt.event.ActionListener;
 import modelo.Usuario;
 import dao.UsuarioDAO;
+import gestionador.ControladorGestionador;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import vista.LogInForm;
+import vista.Menu;
 
 
 public class ControladorUsuario implements ActionListener {
@@ -75,6 +77,12 @@ public class ControladorUsuario implements ActionListener {
   
   
   public void desplegarMenu(){
-    vista.desplegarMenu();
+    Menu menuVista = new Menu();
+    ControladorGestionador controladorMenu = new ControladorGestionador(menuVista);
+    controladorMenu.vista.setVisible(true);
+    controladorMenu.vista.setLocationRelativeTo(null);    
   }
+
+
 }
+
