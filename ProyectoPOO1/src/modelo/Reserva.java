@@ -11,7 +11,7 @@ import modelo.Incidente;
  */
 public class Reserva {
 
-    
+  private Estudiante organizador;
   private String asunto;
   private String estado;
   private Date fechaSolicitud;
@@ -23,12 +23,10 @@ public class Reserva {
   private int id;  
   private int idEstado;
   private String idSala;
-  private int idOrganizador;
 
  
   public Reserva() {
-        
-   }
+  }
    
   
   public Reserva(int pId, String pAsunto, Date pFechaSolicitud, Date pFechaUso, Time pHoraInicio,
@@ -60,6 +58,7 @@ public class Reserva {
     this.incidentesReserva =  pInicdentesReserva; 
   }
 
+  
     public String getAsunto() {
         return asunto;
     }
@@ -147,19 +146,11 @@ public class Reserva {
     public void setIdSala(String idSala) {
         this.idSala = idSala;
     }
-
-    public int getIdOrganizador() {
-        return idOrganizador;
-    }
-
-    public void setIdOrganizador(int idOrganizador) {
-        this.idOrganizador = idOrganizador;
-    }
     
     
-    public boolean getIsExitosa() {
-        return isExitosa;
-    }
+  public boolean getIsExitosa() {
+    return isExitosa;
+  }
 
 
     

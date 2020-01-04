@@ -13,7 +13,7 @@ import modelo.Estudiante;
 import modelo.Usuario;
 import vista.AgregarEstudianteForm;
 import vista.AgregarSalaForm;
-import vista.ConsultarEstudiantesForm;
+import vista.ConsultaEstudiantesForm;
 import vista.Menu;
 import vista.ModificarSala;
 
@@ -56,8 +56,8 @@ public class ControladorGestionador implements ActionListener {
               controladorEstudiante.cargarCarreras();
               break;
           case "Consultar Estudiante":
-              ConsultarEstudiantesForm estudiantesConsultadosVista = new
-                  ConsultarEstudiantesForm();
+              ConsultaEstudiantesForm estudiantesConsultadosVista = new
+                  ConsultaEstudiantesForm();
               ControladorConsultaEstudiantes controladorEstudiantesConsultados = new 
                   ControladorConsultaEstudiantes(estudiantesConsultadosVista);   
               controladorEstudiantesConsultados.vista.setVisible(true);
