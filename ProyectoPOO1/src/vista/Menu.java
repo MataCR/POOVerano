@@ -1,16 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
-
-import controlador.ControladorAgregarEstudianteForm;
-import modelo.Estudiante;
-import vista.AgregarEstudianteForm;
-import vista.AgregarSalaForm;
-import vista.CalificacionSalaForm;
-import vista.ConsultarEstudiantesForm;
 
 /**
  *
@@ -43,7 +31,8 @@ public class Menu extends javax.swing.JFrame {
         btConsultarSala = new javax.swing.JButton();
         btCrearReserva = new javax.swing.JButton();
         btAnalisisDatos = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btReservasEstudiante = new javax.swing.JButton();
+        btCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +89,9 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Reservas de un estudiante");
+        btReservasEstudiante.setText("Reservas de un estudiante");
+
+        btCerrarSesion.setText("Cerrar Sesión");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,7 +123,11 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(btCrearReserva)))
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btReservasEstudiante)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btCerrarSesion)
+                                .addGap(8, 8, 8)))
                         .addGap(27, 27, 27))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(199, 199, 199)
@@ -162,13 +157,15 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(btModificarDatosSala))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
-                                .addComponent(jButton1))))
+                                .addComponent(btReservasEstudiante))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)))
                 .addGap(20, 20, 20)
                 .addComponent(btCalificarSala)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(btCerrarSesion)
+                .addContainerGap())
         );
 
         pack();
@@ -179,40 +176,23 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btAnalisisDatosActionPerformed
 
     private void btAgregarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAgregarEstudianteActionPerformed
-      AgregarEstudianteForm estudianteVista = new AgregarEstudianteForm();
-      Estudiante modeloEstudiante = new Estudiante();
-      ControladorAgregarEstudianteForm controladorEstudiante = new ControladorAgregarEstudianteForm(estudianteVista);
-      controladorEstudiante.vista.setVisible(true);
-      controladorEstudiante.vista.setLocationRelativeTo(null);
-      controladorEstudiante.cargarCarreras();
+
     }//GEN-LAST:event_btAgregarEstudianteActionPerformed
 
     private void btConsultarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarEstudianteActionPerformed
-      ConsultarEstudiantesForm consultaEstudiante = new ConsultarEstudiantesForm();
-      consultaEstudiante.setVisible(true);
-      this.dispose();         
+        
     }//GEN-LAST:event_btConsultarEstudianteActionPerformed
 
     private void btAgregarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAgregarSalaActionPerformed
-      AgregarSalaForm agregacionSala = new AgregarSalaForm();
-      agregacionSala.setVisible(true);
-      this.dispose();       
+          
     }//GEN-LAST:event_btAgregarSalaActionPerformed
 
     private void btModificarDatosSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModificarDatosSalaActionPerformed
-     /*
-      ModificarSalaForm modificacionSala =  new ModificarSalaForm();
-      modificacionSala.setVisible(true);
-      this.dispose();
-     */
+
     }//GEN-LAST:event_btModificarDatosSalaActionPerformed
 
     private void btCalificarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalificarSalaActionPerformed
-     /*
-        CalificarSalaForm calificacionSala = new CalificarSalaForm();
-      calificacionSala.setVisible(true);
-      this.dispose();
-     */
+ 
     }//GEN-LAST:event_btCalificarSalaActionPerformed
 
     private void btConsultarSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarSalaActionPerformed
@@ -255,15 +235,16 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAgregarEstudiante;
-    private javax.swing.JButton btAgregarSala;
-    private javax.swing.JButton btAnalisisDatos;
-    private javax.swing.JButton btCalificarSala;
-    private javax.swing.JButton btConsultarEstudiante;
-    private javax.swing.JButton btConsultarSala;
-    private javax.swing.JButton btCrearReserva;
-    private javax.swing.JButton btModificarDatosSala;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JButton btAgregarEstudiante;
+    public javax.swing.JButton btAgregarSala;
+    public javax.swing.JButton btAnalisisDatos;
+    public javax.swing.JButton btCalificarSala;
+    public javax.swing.JButton btCerrarSesion;
+    public javax.swing.JButton btConsultarEstudiante;
+    public javax.swing.JButton btConsultarSala;
+    public javax.swing.JButton btCrearReserva;
+    public javax.swing.JButton btModificarDatosSala;
+    public javax.swing.JButton btReservasEstudiante;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
