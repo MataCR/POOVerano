@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Estudiante;
 import modelo.Reserva;
 import modelo.Incidente;
-import vista.ConsultarEstudiantesForm;
+import vista.ConsultaEstudiantesForm;
 import vista.Menu;
 
 
@@ -27,12 +27,12 @@ import vista.Menu;
  * @author Andrés Pérez Bonilla
  */
 public class ControladorConsultaEstudiantes implements ActionListener {
-  public ConsultarEstudiantesForm vista;
+  public ConsultaEstudiantesForm vista;
   public EstudianteDAO dao;
   public Estudiante modelo;
   
   
-  public ControladorConsultaEstudiantes(ConsultarEstudiantesForm pVista){
+  public ControladorConsultaEstudiantes(ConsultaEstudiantesForm pVista){
     vista = pVista;
     dao= new EstudianteDAO();
     this.vista.btBuscar.addActionListener(this);
