@@ -2,6 +2,8 @@ package modelo;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import modelo.Incidente;
 
 /**
  *
@@ -9,72 +11,161 @@ import java.sql.Time;
  */
 public class Reserva {
 
-
+    
+  private String asunto;
   private String estado;
-  private Date fechaCreacion;
-  private Date fechaReserva;
+  private Date fechaSolicitud;
+  private Date fechaUso;
   private Time horaInicio;
-  private Time horFin;
+  private Time horaFin;
+  private ArrayList<Incidente> incidentesReserva = new ArrayList<Incidente>();
+  private boolean isExitosa;
+  private int id;  
+  private int idEstado;
+  private String idSala;
+  private int idOrganizador;
 
+ 
+  public Reserva() {
+        
+   }
+   
   
-  public Reserva(String estado, Date fechaCreacion, Date fechaReserva, Time horaInicio, Time horFin) {
-    this.estado = estado;
-    this.fechaCreacion = fechaCreacion;
-    this.fechaReserva = fechaReserva;
-    this.horaInicio = horaInicio;
-    this.horFin = horFin;
-  }
-
-  
-  public String getEstado() {
-    return estado;
-  }
-
-  
-  public void setEstado(String estado) {
-    this.estado = estado;
-  }
-
-  
-  public Date getFechaCreacion() {
-    return fechaCreacion;
-  }
-
-  
-  public void setFechaCreacion(Date fechaCreacion) {
-    this.fechaCreacion = fechaCreacion;
-  }
-
-  
-  public Date getFechaReserva() {
-    return fechaReserva;
-  }
-
-  
-  public void setFechaReserva(Date fechaReserva) {
-    this.fechaReserva = fechaReserva;
-  }
-
-  
-  public Time getHoraInicio() {
-    return horaInicio;
-  }
-
-  
-  public void setHoraInicio(Time horaInicio) {
-    this.horaInicio = horaInicio;
-  }
-
-  
-  public Time getHorFin() {
-    return horFin;
-  }
-
-  
-  public void setHorFin(Time horFin) {
-    this.horFin = horFin;
+  public Reserva(int pId, String pAsunto, Date pFechaSolicitud, Date pFechaUso, Time pHoraInicio,
+      Time pHoraFin, String pIdSala, String pEstado, boolean pIsExitosa){
+    this.id = pId;
+    this.asunto = pAsunto;
+    this.fechaSolicitud = pFechaSolicitud;
+    this.fechaUso = pFechaUso;
+    this.horaInicio = pHoraInicio;
+    this.horaFin = pHoraFin;
+    this.idSala = pIdSala;
+    this.estado = pEstado;
+    this.isExitosa = pIsExitosa;
   }
   
   
-  
+  public Reserva(int pId, String pAsunto, Date pFechaSolicitud, Date pFechaUso, Time pHoraInicio,
+      Time pHoraFin, String pIdSala, String pEstado, boolean pIsExitosa, 
+      ArrayList<Incidente> pInicdentesReserva){
+    this.id = pId;
+    this.asunto = pAsunto;
+    this.fechaSolicitud = pFechaSolicitud;
+    this.fechaUso = pFechaUso;
+    this.horaInicio = pHoraInicio;
+    this.horaFin = pHoraFin;
+    this.idSala = pIdSala;
+    this.estado = pEstado;
+    this.isExitosa = pIsExitosa;
+    this.incidentesReserva =  pInicdentesReserva; 
+  }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Date getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public void setFechaSolicitud(Date fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
+    }
+
+    public Date getFechaUso() {
+        return fechaUso;
+    }
+
+    public void setFechaUso(Date fechaUso) {
+        this.fechaUso = fechaUso;
+    }
+
+    public Time getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(Time horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public Time getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(Time horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public ArrayList<Incidente> getIncidentesReserva() {
+        return incidentesReserva;
+    }
+
+    public void setIncidentesReserva(ArrayList<Incidente> incidentesReserva) {
+        this.incidentesReserva = incidentesReserva;
+    }
+
+    public boolean isIsExitosa() {
+        return isExitosa;
+    }
+
+    public void setIsExitosa(boolean isExitosa) {
+        this.isExitosa = isExitosa;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    public String getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(String idSala) {
+        this.idSala = idSala;
+    }
+
+    public int getIdOrganizador() {
+        return idOrganizador;
+    }
+
+    public void setIdOrganizador(int idOrganizador) {
+        this.idOrganizador = idOrganizador;
+    }
+    
+    
+    public boolean getIsExitosa() {
+        return isExitosa;
+    }
+
+
+    
+    
+  public ArrayList<Incidente> agregarIncidente(Incidente incidente){
+    incidentesReserva.add(incidente);
+    return incidentesReserva;
+  }
 }
