@@ -42,10 +42,10 @@ public class ControladorUsuario implements ActionListener {
       }
     }
     catch (SQLException ex) {
-      Logger.getLogger(ControladorAgregarEstudianteForm.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(ControladorAgregarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
     } 
     catch (ClassNotFoundException ex) {
-      Logger.getLogger(ControladorAgregarEstudianteForm.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(ControladorAgregarEstudiante.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
