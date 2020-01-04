@@ -24,13 +24,13 @@ public class ControladorAgregarEstudianteForm implements ActionListener {
   
   public ControladorAgregarEstudianteForm(AgregarEstudianteForm pVista){
     vista = pVista;
-   // modelo = pModelo;
     dao= new EstudianteDAO();
     this.vista.btRegistrarEstudiante.addActionListener(this);
     this.vista.btVolver.addActionListener(this);
   }
   
   
+  @Override
   public void actionPerformed(ActionEvent e){    
     try{
       switch(e.getActionCommand()) {
@@ -54,15 +54,15 @@ public class ControladorAgregarEstudianteForm implements ActionListener {
   
   
   public void agregarEstudiante() throws SQLException, ClassNotFoundException{
-    if(vista.validarDatosCorreo() == false) {
+    if(vista.validarDatosCorreo() == true) {
       JOptionPane.showMessageDialog(vista, "Debe ingresar una dirección de correo");
     } 
     if(vista.validarDatosCompletos() == false) {
       JOptionPane.showMessageDialog(vista, "Debe completar todos los campos mostrados");
     }
-    if(vista.validarDatosEnteros()== false) {
-      JOptionPane.showMessageDialog(vista, "El carnet y el télefono deben ser números enteros");
-    }
+//    if(vista.validarDatosEnteros()== true) {
+//      JOptionPane.showMessageDialog(vista, "El carnet y el télefono deben ser números enteros");
+//    }
     else{
       String carnetString = vista.txtCarnet.getText();
       int carnet = Integer.parseInt(carnetString);
