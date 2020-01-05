@@ -13,13 +13,69 @@ public class Participante {
   
 
   private String nombre;
-  private String apellido;
+  private String primerApellido;
+  private String segundoApellido;
+  private String correo;
+  private int idParticipante;
+
+  public Participante(String nombre, String primerApellido, String segundoApellido, String correo, int idParticipante) {
+    this.nombre = nombre;
+    this.primerApellido = primerApellido;
+    this.segundoApellido = segundoApellido;
+    this.correo = correo;
+    this.idParticipante = idParticipante;
+  }
+  
+  
+  public Participante(String nombre, String primerApellido, String segundoApellido, String correo) {
+    this.nombre = nombre;
+    this.primerApellido = primerApellido;
+    this.segundoApellido = segundoApellido;
+    this.correo = correo;
+  }
 
   
-  public Participante(String nombre, String apellido) {
-    this.nombre = nombre;
-    this.apellido = apellido;
+  public String getPrimerApellido() {
+    return primerApellido;
   }
+
+  
+  public void setPrimerApellido(String primerApellido) {
+    this.primerApellido = primerApellido;
+  }
+
+  
+  public String getSegundoApellido() {
+    return segundoApellido;
+  }
+
+  
+  public void setSegundoApellido(String segundoApellido) {
+    this.segundoApellido = segundoApellido;
+  }
+
+  
+  public String getCorreo() {
+    return correo;
+  }
+
+  
+  public void setCorreo(String correo) {
+    this.correo = correo;
+  }
+
+  
+  public int getIdParticipante() {
+    return idParticipante;
+  }
+
+  
+  public void setIdParticipante(int idParticipante) {
+    this.idParticipante = idParticipante;
+  }
+
+  
+
 
   
   public String getNombre() {
@@ -29,18 +85,5 @@ public class Participante {
   
   public void setNombre(String nombre) {
     this.nombre = nombre;
-  }
-
-  
-  public String getApellido() {
-    return apellido;
-  }
-
-  
-  public void setApellido(String apellido) {
-    this.apellido = apellido;
-  }
-  
-  
-  
+  } 
 }
