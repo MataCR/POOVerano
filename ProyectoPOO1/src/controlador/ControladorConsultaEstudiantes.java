@@ -133,7 +133,6 @@ public class ControladorConsultaEstudiantes implements ActionListener {
       estudiantesConsultado.add(estudiante.getCarrera());
       modeloTabla.addRow(estudiantesConsultado);
       vista.tbInfoEstudiante.setModel(modeloTabla);
-    
   }
   
   
