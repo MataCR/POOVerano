@@ -12,12 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import modelo.Estudiante;
 import modelo.Reserva;
 import modelo.Sala;
@@ -44,6 +47,7 @@ public class ControladorReservas implements ActionListener{
 
   
   public void actionPerformed(ActionEvent e) {    
+    try{
       switch(e.getActionCommand()) {
           case "Buscar":
               llenarTabla();
@@ -57,6 +61,9 @@ public class ControladorReservas implements ActionListener{
           default:
               break;
       }
+    }catch(Exception x){
+      JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");
+   }
   }  
    
   public void cargarCombo(){
@@ -72,7 +79,21 @@ public class ControladorReservas implements ActionListener{
         }
   }
 
+  
+  public void cargarComboSalas(){
+    try {
+        ArrayList<String> salas = dao.cargarComboSalasReservas();
+        for (int i = 0; i < salas.size(); i++) {
+            String sala = salas.get(i);
+            vista.comboSalas.addItem(sala);         
+        }
+        
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+  }
 
+  
   public void llenarTabla(){
     try {
         ArrayList<Sala> salas = dao.consultarSalasMasUtilizadas();
@@ -87,12 +108,8 @@ public class ControladorReservas implements ActionListener{
             System.out.println(e);
         }
   }  
-  
-  public void abrirReserva(){
-     AgregarParticipantes x = new AgregarParticipantes(vista.txtIdAReservar.getText());
-     x.setVisible(true);
-  }
 
+  
   public void cerrarVentanaAgregarSala() {
   Menu menuVista = new Menu();
   ControladorGestionador controladorMenu = new ControladorGestionador(menuVista);
@@ -103,13 +120,26 @@ public class ControladorReservas implements ActionListener{
 
   private void registrarReserva() {
     try {
-        if (dao.validarUsuario() == 1) {
+        if (dao.validarUsuario(Integer.parseInt(vista.txtCarnet.getText())) == 1) {
+            System.out.println(dao.validarUsuario(Integer.parseInt(vista.txtCarnet.getText())));
            Estudiante estudiante = new Estudiante(Integer.parseInt(vista.txtCarnet.getText()));
            String asunto = vista.txtAsunto.getText();
            Date fechaUso=Date.valueOf(vista.txtFecha.getText());  
-           
-           dao.agregarReserva(modelo);
-        } } catch (Exception e) {
+           String horaInicioCombo = vista.comboHoraInicio.getSelectedItem().toString();
+           String minInicio = vista.comboMinutosInicio.getSelectedItem().toString();
+           Time horaInicio = new Time(Integer.parseInt(horaInicioCombo), Integer.parseInt(minInicio), 0);
+           String horaFinCombo = vista.comboHoraFin.getSelectedItem().toString();
+           String minFin = vista.comboMinFin.getSelectedItem().toString();
+           Time horaFin = new Time(Integer.parseInt(horaFinCombo), Integer.parseInt(minFin), 0);
+            System.out.println(horaInicio+"c"+horaFin);
+           String idSala = vista.comboSalas.getSelectedItem().toString();
+           System.out.println(idSala);
+           Reserva reserva = new Reserva(estudiante, asunto, fechaUso, horaInicio,horaFin, idSala);
+           dao.agregarReserva(reserva);         
+        }else{
+           JOptionPane.showMessageDialog(null, "Usuario no registrado");
+        }
+        } catch (ClassNotFoundException| SQLException e) {
          JOptionPane.showMessageDialog(null, e);
         }
   }
