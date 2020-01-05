@@ -5,17 +5,20 @@ import controlador.ControladorAgregarEstudiante;
 import controlador.ControladorConsultaEstudiantes;
 import controlador.ControladorSala;
 import controlador.ControladorVerificacionSala;
+import controlador.ControladorConsultaReservasEstudiante;
 import dao.EstudianteDAO;
 import dao.UsuarioDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import modelo.Estudiante;
 import modelo.Usuario;
+import modelo.Reserva;
 import vista.AgregarEstudianteForm;
 import vista.AgregarSalaForm;
 import vista.ConsultaEstudiantesForm;
 import vista.Menu;
 import vista.ModificarSala;
+import vista.ConsultaReservasEstudianteForm;
 
 
 /**
@@ -72,7 +75,7 @@ public class ControladorGestionador implements ActionListener {
               vista.setVisible(false);
               controladorSala.vista.setLocationRelativeTo(null);
               controladorSala.cargarHorarios();
-              break;
+              break;                           
           case "Modificar Datos de Salas":
               ModificarSala modificarVista = new ModificarSala();
               ControladorVerificacionSala controladorModificar = new 
@@ -82,6 +85,17 @@ public class ControladorGestionador implements ActionListener {
               controladorModificar.vista.setLocationRelativeTo(null);
               //controladorModificar.cargarCombo();
               break;
+
+          case "Reservas de un estudiante":
+              ConsultaReservasEstudianteForm estudiantesReservaVista = new 
+                  ConsultaReservasEstudianteForm();
+              ControladorConsultaReservasEstudiante controladorReservasEstudiante = new 
+                  ControladorConsultaReservasEstudiante(estudiantesReservaVista);
+              controladorReservasEstudiante.vista.setVisible(true);
+              vista.setVisible(false);
+              controladorReservasEstudiante.vista.setLocationRelativeTo(null);
+              break;
+             
           default:
               break;
       }
