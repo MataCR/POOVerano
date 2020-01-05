@@ -24,6 +24,7 @@ import javax.swing.table.TableModel;
 import modelo.Estudiante;
 import modelo.Reserva;
 import modelo.Sala;
+import utilidades.SMS;
 import vista.AgregarParticipantes;
 import vista.CrearReserva;
 import vista.Menu;
@@ -48,7 +49,7 @@ public class ControladorReservas implements ActionListener{
 
   
   public void actionPerformed(ActionEvent e) {    
-    try{
+    //try{
       switch(e.getActionCommand()) {
           case "Buscar":
               llenarTabla();
@@ -61,9 +62,9 @@ public class ControladorReservas implements ActionListener{
               break;
           default:
               break;
-      }
-    }catch(Exception x){
-      JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");
+      //}
+    //}//catch(Exception x){
+      //JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");
    }
   }  
    
@@ -122,27 +123,42 @@ public class ControladorReservas implements ActionListener{
   private void registrarReserva() {
     try {
         if (dao.validarUsuario(Integer.parseInt(vista.txtCarnet.getText())) == 1) {
-            System.out.println(dao.validarUsuario(Integer.parseInt(vista.txtCarnet.getText())));
-           Estudiante estudiante = new Estudiante(Integer.parseInt(vista.txtCarnet.getText()));
-           String asunto = vista.txtAsunto.getText();
-           Date fechaUso=Date.valueOf(vista.txtFecha.getText());  
-           String horaInicioCombo = vista.comboHoraInicio.getSelectedItem().toString();
-           String minInicio = vista.comboMinutosInicio.getSelectedItem().toString();
-           Time horaInicio = new Time(Integer.parseInt(horaInicioCombo), Integer.parseInt(minInicio), 0);
-           String horaFinCombo = vista.comboHoraFin.getSelectedItem().toString();
-           String minFin = vista.comboMinFin.getSelectedItem().toString();
-           Time horaFin = new Time(Integer.parseInt(horaFinCombo), Integer.parseInt(minFin), 0);
-            System.out.println(horaInicio+"c"+horaFin);
-           String idSala = vista.comboSalas.getSelectedItem().toString();
-           System.out.println(idSala);
-           modelo = new Reserva(estudiante, asunto, fechaUso, horaInicio,horaFin, idSala);
-           dao.agregarReserva(modelo);
-           AgregarParticipantes vistaParticipantes = new AgregarParticipantes(estudiante.getCarnet());
-           ControladorParticipantes controlador = new ControladorParticipantes(vistaParticipantes);
-           controlador.cargarComboReservaParticipante(estudiante.getCarnet());
-           controlador.vista.setVisible(true);
-           vista.setVisible(false);
-           controlador.vista.setLocationRelativeTo(null);           
+           if(dao.verificarCalificacion(Integer.parseInt(vista.txtCarnet.getText())) == 0){ 
+              if(dao.verificarIncidencias(Integer.parseInt(vista.txtCarnet.getText())) == 0){
+                 if(dao.verificarReservas(Integer.parseInt(vista.txtCarnet.getText())) == 0){
+                    Estudiante estudiante = new Estudiante(Integer.parseInt(vista.txtCarnet.getText()));
+                    String asunto = vista.txtAsunto.getText();
+                    Date fechaUso=Date.valueOf(vista.txtFecha.getText());  
+                    String horaInicioCombo = vista.comboHoraInicio.getSelectedItem().toString();
+                    String minInicio = vista.comboMinutosInicio.getSelectedItem().toString();
+                    Time horaInicio = new Time(Integer.parseInt(horaInicioCombo), Integer.parseInt(minInicio), 0);
+                    String horaFinCombo = vista.comboHoraFin.getSelectedItem().toString();
+                    String minFin = vista.comboMinFin.getSelectedItem().toString();
+                    Time horaFin = new Time(Integer.parseInt(horaFinCombo), Integer.parseInt(minFin), 0);
+                    String idSala = vista.comboSalas.getSelectedItem().toString();
+                    System.out.println(idSala);
+                    modelo = new Reserva(estudiante, asunto, fechaUso, horaInicio,horaFin, idSala);
+                    dao.agregarReserva(modelo);
+                    dao.inicializarCodigo(vista.comboSalas.getSelectedItem().toString(),Integer.parseInt(vista.txtCarnet.getText()) );
+                    SMS sms = new SMS();
+                    String codigo = vista.comboSalas.getSelectedItem().toString()+"-"+dao.consultarReserva()+"-"+vista.txtCarnet.getText();
+                    System.out.println(codigo);
+                    sms.enviar(dao.consultarNumeroTelefono(Integer.parseInt(vista.txtCarnet.getText())), codigo);
+                    AgregarParticipantes vistaParticipantes = new AgregarParticipantes(estudiante.getCarnet());
+                    ControladorParticipantes controlador = new ControladorParticipantes(vistaParticipantes);
+                    controlador.cargarComboReservaParticipante(estudiante.getCarnet());
+                    controlador.vista.setVisible(true);
+                    vista.setVisible(false);
+                    controlador.vista.setLocationRelativeTo(null);
+                 }else{
+                    JOptionPane.showMessageDialog(null, "Usuario con mas de 3 reservas");  
+                 }
+              }else{
+                 JOptionPane.showMessageDialog(null, "Usuario con mas de 5 incidencias");    
+              }
+           }else{
+              JOptionPane.showMessageDialog(null, "Usuario con nota menor a 70");    
+           }
         }else{
            JOptionPane.showMessageDialog(null, "Usuario no registrado");
         }
