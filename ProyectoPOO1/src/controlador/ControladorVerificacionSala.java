@@ -57,8 +57,8 @@ public class ControladorVerificacionSala implements ActionListener{
     }
   }
   public void verificarDatos() throws SQLException, ClassNotFoundException{
-      if(vista.validarDatosCompletos()){
-          String idSala = vista.cbxSalas.getSelectedItem();
+      //if(vista.validarDatosCompletos()){
+          String idSala = vista.cbxSalas.getSelectedItem().toString();
           modelo = new Sala(idSala);
           Sala salaActual = dao.verificarSala(modelo);
           if(salaActual != null){
@@ -66,13 +66,8 @@ public class ControladorVerificacionSala implements ActionListener{
               desplegarModificacion();
           }
           else{
-              JOptionPane.showMessageDialog(vista, "Los datos son incorrectos");
-              
+              JOptionPane.showMessageDialog(vista, "Los datos son incorrectos");   
           }
-      }
-      else{
-         JOptionPane.showMessageDialog(vista, "Todos lo datos son requeridos");
-      }
   }
   
   public void cerrarVentanaValidarDatosSala(){
