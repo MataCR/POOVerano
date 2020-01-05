@@ -31,12 +31,13 @@ public class ControladorParticipantes implements ActionListener{
     this.vista = pVista;
     dao = new ReservaDAO();
     this.vista.btnRegistrarParticipante.addActionListener(this);
+    this.vista.btnAgregar.addActionListener(this);
     this.vista.btnVolver.addActionListener(this);
   }
 
 
   public void actionPerformed(ActionEvent e) {    
-    
+    try{
       switch(e.getActionCommand()) {
           case "Registrar Participante":
               registrarParticipante();
@@ -44,12 +45,15 @@ public class ControladorParticipantes implements ActionListener{
           case "Volver":
               cerrarVentanaAgregarSala();
               break;
+           case "Agregar":
+              agregarParticipanteReserva();
+              break;
           default:
               break;
-      
-    }//catch(Exception x){
-    //  JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");
-   //}
+      } 
+    }catch(Exception x){
+      JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");   
+    }
   }
 
 
@@ -91,5 +95,31 @@ public class ControladorParticipantes implements ActionListener{
         } catch (Exception e) {
             System.out.println(e);
         }
+  }
+  
+  
+  public void cargarComboReservaParticipante(int carnet){
+    try {
+        ArrayList<Integer> ids = dao.cargarComboReservasParticipante(carnet);
+        for (int i = 0; i < ids.size(); i++) {
+            Integer id = ids.get(i);
+            vista.comboReservasParticipante.addItem(id.toString());         
+        }
+        
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+  }  
+
+  private void agregarParticipanteReserva() {
+    try{
+       int idReserva = Integer.parseInt(vista.comboReservasParticipante.getSelectedItem().toString()) ;
+       int idParticipante = Integer.parseInt(vista.txtIdParticipante.getText());
+       dao.agregarParticipanteReserva(idReserva, idParticipante);  
+        JOptionPane.showMessageDialog(null, "Exito");
+    }catch(Exception e){
+        System.out.println(e);
+    }
+
   }
 }
