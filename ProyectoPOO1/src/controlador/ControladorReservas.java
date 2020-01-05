@@ -137,8 +137,9 @@ public class ControladorReservas implements ActionListener{
            System.out.println(idSala);
            modelo = new Reserva(estudiante, asunto, fechaUso, horaInicio,horaFin, idSala);
            dao.agregarReserva(modelo);
-           AgregarParticipantes vistaParticipantes = new AgregarParticipantes();
+           AgregarParticipantes vistaParticipantes = new AgregarParticipantes(estudiante.getCarnet());
            ControladorParticipantes controlador = new ControladorParticipantes(vistaParticipantes);
+           controlador.cargarComboReservaParticipante(estudiante.getCarnet());
            controlador.vista.setVisible(true);
            vista.setVisible(false);
            controlador.vista.setLocationRelativeTo(null);           
