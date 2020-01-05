@@ -139,5 +139,33 @@ public class ReservaDAO {
       participantes.add(participante);
     }
     return participantes;
-  } 
+  }
+  
+  
+  public ArrayList<Integer> cargarComboReservasParticipante(int carnet)throws SQLException,
+      ClassNotFoundException{
+    resultadoConsulta = ConexionSQL.createConsult("exec reservasDispOrganizador "
+        +carnet+";");
+    ArrayList<Integer> ids = new ArrayList<>();
+    while (resultadoConsulta.next()) {
+       
+      int id = resultadoConsulta.getInt(1);
+      ids.add(id);
+    }
+    return ids;
+  }
+  
+  
+ public void agregarParticipanteReserva(int idReserva, int idParticipante) throws SQLException,
+      ClassNotFoundException {
+    try {
+      CallableStatement entrada = ConexionSQL.getConexionSQL().prepareCall("{call "
+          + "insertarReservaParticipante (?,?)}");
+      entrada.setInt(1, idParticipante);
+      entrada.setInt(2, idReserva);
+      entrada.execute();
+    }
+    catch(ClassNotFoundException | SQLException e) {     
+    }   
+  }  
 }
