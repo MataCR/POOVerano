@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import modelo.Horario;
+import modelo.Recurso;
 import modelo.Sala;
 
 /**
@@ -67,6 +68,18 @@ public class SalaDAO {
     return recursos;
   }
   
+  public ArrayList<String> cargarComboEstado()throws SQLException,
+      ClassNotFoundException{
+    resultadoConsulta = ConexionSQL.createConsult("exec estados "+";");
+    ArrayList<String> estados = new ArrayList<String>();
+    while (resultadoConsulta.next()) {
+       
+      String estado = resultadoConsulta.getString(2);
+      estados.add(estado);
+    }
+    return estados;
+  }
+  
   public ArrayList<Horario> consultarHorariosDisponibles() throws SQLException,
           ClassNotFoundException{
       resultadoConsulta = ConexionSQL.createConsult("exec tablaHorarios;");
@@ -94,14 +107,24 @@ public class SalaDAO {
   }
   
   public Sala verificarSala(Sala sala) throws SQLException, ClassNotFoundException{
-      ArrayList <String> salas= cargarSalas();
+      ArrayList <Sala> salas = cargarSalasVerificacion();
       int cantidad = salas.size();   
       for (int i = 0; i<cantidad; i++){
-        if(sala.equals(salas.get(i))){
+        if(sala.equalsSala(salas.get(i))){
             return sala;
         }
-  }
+      }
       return null;
+  }
+  
+  public ArrayList<Sala> cargarSalasVerificacion() throws SQLException, ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec cargarSalas;");
+      ArrayList <Sala> salas = new ArrayList<Sala>();
+      while (resultadoConsulta.next()){
+          Sala salaEncontrada = new Sala(resultadoConsulta.getString(1));
+          salas.add(salaEncontrada);
+      }
+      return salas;
   }
   
   public ArrayList<String> cargarSalas() throws SQLException, ClassNotFoundException{
@@ -127,5 +150,47 @@ public class SalaDAO {
     }
     return true;    
   }
+  
+  public boolean modificarSalaUbicacion(Sala sala) throws SQLException, ClassNotFoundException{
+      try{
+          CallableStatement entry = ConexionSQL.getConexionSQL().prepareCall("{call modificarSalaUbicacion"
+          + "(?,?)}");
+          entry.setString(1, sala.getIdSala());
+          entry.setString(2, sala.getUbicacion());
+          entry.execute();
+      }
+      catch(ClassNotFoundException | SQLException e){
+          return false;
+      }
+      return true;
+  }
+  
+    public boolean modificarSalaRecurso(Sala sala, Recurso recurso) throws SQLException, ClassNotFoundException{
+      try{
+          CallableStatement entry = ConexionSQL.getConexionSQL().prepareCall("{call modificarSalaRecurso"
+          + "(?,?)}");
+          entry.setString(1, sala.getIdSala());
+          //entry.setString(2, recurso.()); //getSelectedIndex() + 1
+          entry.execute();
+      }
+      catch(ClassNotFoundException | SQLException e){
+          return false;
+      }
+      return true;
+  }
+      public boolean modificarSalaEstado(Sala sala) throws SQLException, ClassNotFoundException{
+      try{
+          CallableStatement entry = ConexionSQL.getConexionSQL().prepareCall("{call modificarSalaUbicacion"
+          + "(?,?)}");
+          entry.setString(1, sala.getIdSala());
+          entry.setString(2, sala.getEstado());
+          entry.execute();
+      }
+      catch(ClassNotFoundException | SQLException e){
+          return false;
+      }
+      return true;
+  }
 }
+
 
