@@ -6,6 +6,7 @@ import controlador.ControladorConsultaEstudiantes;
 import controlador.ControladorSala;
 import controlador.ControladorVerificacionSala;
 import controlador.ControladorConsultaReservasEstudiante;
+import controlador.ControladorGraficos;
 import controlador.ControladorReservas;
 import dao.EstudianteDAO;
 import dao.UsuarioDAO;
@@ -21,6 +22,7 @@ import vista.Menu;
 import vista.ModificarSala;
 import vista.ConsultaReservasEstudianteForm;
 import vista.CrearReserva;
+import vista.Reporte;
 
 
 /**
@@ -105,9 +107,17 @@ public class ControladorGestionador implements ActionListener {
               controladorReservas.vista.setVisible(true);
               vista.setVisible(false);
               controladorReservas.vista.setLocationRelativeTo(null);
-              break;            
+              break; 
+              
+          case "Análisis de Datos":
+              Reporte analisisdDatos = new Reporte();
+              ControladorGraficos controlador = new ControladorGraficos(analisisdDatos);
+              controlador.vista.setVisible(true);
+              vista.setVisible(false);
+              controlador.vista.setLocationRelativeTo(null);
+              break;
           default:
               break;
       }
   }
-}//
+}//Análisis de Datos
