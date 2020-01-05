@@ -19,6 +19,7 @@ import modelo.Horario;
 import modelo.Sala;
 import vista.AgregarSalaForm;
 import vista.Menu;
+import vista.SeleccionarHorario;
 
 
 /**
@@ -29,6 +30,7 @@ public class ControladorSala implements ActionListener{
   public AgregarSalaForm vista;
   public SalaDAO dao;
   public Sala modelo;
+  public ControladorSeleccionarHorario controlador;
   
   
   public ControladorSala(AgregarSalaForm pVista){
@@ -36,7 +38,6 @@ public class ControladorSala implements ActionListener{
     dao= new SalaDAO();
     this.vista.btnAgregarSala.addActionListener(this);
     this.vista.btnVolver.addActionListener(this);
-    this.vista.btnCargarHorarios.addActionListener(this);
   }
   
   
@@ -45,12 +46,11 @@ public class ControladorSala implements ActionListener{
       switch(e.getActionCommand()) {
         case "Agregar Sala":
           agregarSala();
+          abrirSeleccionHorario();
           break;
         case "Volver":
           cerrarVentanaAgregarSala();
           break;
-        case "Cargar Horarios":
-          llenarTablaHorarios();
         default:
           break;
       }
@@ -87,35 +87,19 @@ public class ControladorSala implements ActionListener{
     }
   }
   
-  public void cargarHorarios(){
-    try {
-      ArrayList<String> recursos = dao.cargarComboHorarios();
-      for (int i = 0; i < recursos.size(); i++) {
-        String recurso = recursos.get(i);
-        vista.cbxHorario.addItem(recurso);         
-      }    
-    } 
-    catch (Exception e) {
-      System.out.println(e);
-    }
-  }
-  
-    public void llenarTablaHorarios(){
-    try {
-        ArrayList<Horario> horarios = dao.consultarHorariosDisponibles();
-        DefaultTableModel tm=(DefaultTableModel)vista.horariosTable.getModel();
-        tm.setRowCount(0);
-        for (int i = 0; i < horarios.size(); i++) {
-           Object o[]= {horarios.get(i).getIdHorario(),horarios.get(i).getDia(),horarios.get(i).getHoraApertura()
-           ,horarios.get(i).getHoraCierre()};
-           tm.addRow(o);           
-        }               
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+  public void abrirSeleccionHorario(){
+    SeleccionarHorario horarioVista = new SeleccionarHorario();
+    ControladorSeleccionarHorario controladorSeleccion = new ControladorSeleccionarHorario(horarioVista);
+    controladorSeleccion.vista.setVisible(true);
+    this.vista.setVisible(false);
+    controladorSeleccion.vista.setLocationRelativeTo(null);
+    controladorSeleccion.cargarHorarios();
+    controladorSeleccion.llenarTablaHorarios();
+    controladorSeleccion.cargarSalas();
   }
   
   
+    
  public void cerrarVentanaAgregarSala() {
   Menu menuVista = new Menu();
   ControladorGestionador controladorMenu = new ControladorGestionador(menuVista);
