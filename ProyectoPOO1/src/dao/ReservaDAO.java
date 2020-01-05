@@ -5,6 +5,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import modelo.Participante;
 import modelo.Reserva;
 import modelo.Sala;
 
@@ -106,4 +107,37 @@ public class ReservaDAO {
     }
     return salas;
   }
+  
+  
+ public void agregarParticipante(Participante participante) throws SQLException,
+      ClassNotFoundException {
+    try {
+      CallableStatement entrada = ConexionSQL.getConexionSQL().prepareCall("{call "
+          + "registrarParticipante (?,?,?,?)}");
+      entrada.setString(1, participante.getNombre());
+      entrada.setString(2, participante.getPrimerApellido());
+      entrada.setString(3, participante.getSegundoApellido());
+      entrada.setString(4, participante.getCorreo());
+      entrada.execute();
+    }
+    catch(ClassNotFoundException | SQLException e) {     
+    }   
+  }
+ 
+ 
+  public ArrayList<Participante> consultarParticipantes()throws SQLException,
+      ClassNotFoundException{
+    resultadoConsulta = ConexionSQL.createConsult("exec consularParticipantes "+";");
+    ArrayList<Participante> participantes = new ArrayList<Participante>();
+    while (resultadoConsulta.next()) {  
+      int id = resultadoConsulta.getInt(1);
+      String nombre = resultadoConsulta.getString(2);
+      String primerApellido = resultadoConsulta.getString(3);
+      String segundoApellido = resultadoConsulta.getString(4);
+      String correo = resultadoConsulta.getString(5);
+      Participante participante = new Participante(nombre,primerApellido,segundoApellido,correo,id);
+      participantes.add(participante);
+    }
+    return participantes;
+  } 
 }
