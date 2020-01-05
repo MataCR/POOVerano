@@ -2,6 +2,7 @@ package gestionador;
 
 
 import controlador.ControladorAgregarEstudiante;
+import controlador.ControladorCalificarSala;
 import controlador.ControladorConsultaEstudiantes;
 import controlador.ControladorSala;
 import controlador.ControladorVerificacionSala;
@@ -17,6 +18,7 @@ import modelo.Usuario;
 import modelo.Reserva;
 import vista.AgregarEstudianteForm;
 import vista.AgregarSalaForm;
+import vista.CalificacionSalaForm;
 import vista.ConsultaEstudiantesForm;
 import vista.Menu;
 import vista.ModificarSala;
@@ -116,8 +118,16 @@ public class ControladorGestionador implements ActionListener {
               vista.setVisible(false);
               controlador.vista.setLocationRelativeTo(null);
               break;
+              
+          case "Calificar Sala":
+              CalificacionSalaForm calificacionForm = new CalificacionSalaForm();
+              ControladorCalificarSala controladorCalificacion = new ControladorCalificarSala(calificacionForm);
+              controladorCalificacion.vista.setVisible(true);
+              vista.setVisible(false);
+              controladorCalificacion.vista.setLocationRelativeTo(null);
+              break;
           default:
               break;
       }
   }
-}//Análisis de Datos
+}//Calificar Sala
