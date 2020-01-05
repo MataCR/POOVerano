@@ -65,6 +65,11 @@ public class Estudiante {
     this.telefono = pTelefono;
     this.reservasEstudiante = pReservasEstudiante;
   }
+
+    public Estudiante(int carnet) {
+        this.carnet = carnet;
+    }
+  
   
   
   public int getCarnet() {
