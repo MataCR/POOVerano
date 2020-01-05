@@ -5,29 +5,59 @@
  */
 package controlador;
 
+import dao.ReservaDAO;
 import dao.SalaDAO;
+import gestionador.ControladorGestionador;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.Estudiante;
+import modelo.Reserva;
 import modelo.Sala;
+import vista.AgregarParticipantes;
 import vista.CrearReserva;
-import vista.Reserva;
+import vista.Menu;
 
 /**
  *
  * @author Mata
  */
-public class ControladorReservas {
-  public SalaDAO dao;
-  public Reserva vista;  
+public class ControladorReservas implements ActionListener{
+  public ReservaDAO dao;
+  public CrearReserva vista;  
+  public Reserva modelo;
 
-  public ControladorReservas(Reserva pVista) {
+  public ControladorReservas(CrearReserva pVista) {
     this.vista = pVista;
-    dao = new SalaDAO();
+    dao = new ReservaDAO();
+    this.vista.btnBuscar.addActionListener(this);
+    this.vista.btnReservar.addActionListener(this);
+    this.vista.btnVolver.addActionListener(this);
   }
 
+  
+  public void actionPerformed(ActionEvent e) {    
+      switch(e.getActionCommand()) {
+          case "Buscar":
+              llenarTabla();
+              break;
+          case "Reservar":
+              registrarReserva();
+              break;              
+          case "Volver":
+              cerrarVentanaAgregarSala();
+              break;
+          default:
+              break;
+      }
+  }  
    
   public void cargarCombo(){
     try {
@@ -59,7 +89,28 @@ public class ControladorReservas {
   }  
   
   public void abrirReserva(){
-     CrearReserva x = new CrearReserva(vista.txtIdAReservar.getText());
+     AgregarParticipantes x = new AgregarParticipantes(vista.txtIdAReservar.getText());
      x.setVisible(true);
+  }
+
+  public void cerrarVentanaAgregarSala() {
+  Menu menuVista = new Menu();
+  ControladorGestionador controladorMenu = new ControladorGestionador(menuVista);
+  controladorMenu.vista.setVisible(true);
+  this.vista.setVisible(false);
+  controladorMenu.vista.setLocationRelativeTo(null); 
+  }
+
+  private void registrarReserva() {
+    try {
+        if (dao.validarUsuario() == 1) {
+           Estudiante estudiante = new Estudiante(Integer.parseInt(vista.txtCarnet.getText()));
+           String asunto = vista.txtAsunto.getText();
+           Date fechaUso=Date.valueOf(vista.txtFecha.getText());  
+           
+           dao.agregarReserva(modelo);
+        } } catch (Exception e) {
+         JOptionPane.showMessageDialog(null, e);
+        }
   }
 }
