@@ -167,5 +167,78 @@ public class ReservaDAO {
     }
     catch(ClassNotFoundException | SQLException e) {     
     }   
-  }  
+  }
+ 
+ 
+  public int verificarCalificacion(int carnet) throws SQLException,
+          ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec verificarCalificacion "
+        +carnet+";");
+      int bandera = 0;
+      while (resultadoConsulta.next()){
+          bandera = resultadoConsulta.getInt(1);        
+      }    
+      return bandera;
+  } 
+  
+  
+  public int verificarIncidencias(int carnet) throws SQLException,
+          ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec verificarIncidencias "
+        +carnet+";");
+      int bandera = 0;
+      while (resultadoConsulta.next()){
+          bandera = resultadoConsulta.getInt(1);        
+      }    
+      return bandera;
+  }
+  
+  
+  public int verificarReservas(int carnet) throws SQLException,
+          ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec verificarReservas "
+        +carnet+";");
+      int bandera = 0;
+      while (resultadoConsulta.next()){
+          bandera = resultadoConsulta.getInt(1);        
+      }    
+      return bandera;
+  }
+  
+  
+ public void inicializarCodigo(String idSala, int carnet) throws SQLException,
+      ClassNotFoundException {
+    try {
+      CallableStatement entrada = ConexionSQL.getConexionSQL().prepareCall("{call "
+          + "crearCodigo (?,?)}");
+      entrada.setString(1, idSala);
+      entrada.setInt(2, carnet);
+      entrada.execute();
+    }
+    catch(ClassNotFoundException | SQLException e) {     
+    }   
+  }
+ 
+ 
+  public int consultarNumeroTelefono(int carnet) throws SQLException,
+          ClassNotFoundException{
+      resultadoConsulta = ConexionSQL.createConsult("exec consultarTelefono "
+        +carnet+";");
+      int telefono = 0;
+      while (resultadoConsulta.next()){
+          telefono = resultadoConsulta.getInt(1);        
+      }    
+      return telefono;
+  } 
+  
+  
+  public int consultarReserva() throws SQLException,
+          ClassNotFoundException{  
+      resultadoConsulta = ConexionSQL.createConsult("exec consultarIdReserva "+";");
+      int reserva = 0;
+      while (resultadoConsulta.next()){
+          reserva = resultadoConsulta.getInt(1);        
+      }    
+      return reserva;
+  }
 }
