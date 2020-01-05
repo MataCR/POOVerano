@@ -101,6 +101,7 @@ public class ControladorGestionador implements ActionListener {
               CrearReserva crearReservaVista = new CrearReserva();
               ControladorReservas controladorReservas = new ControladorReservas(crearReservaVista);
               controladorReservas.cargarCombo();
+              controladorReservas.cargarComboSalas();
               controladorReservas.vista.setVisible(true);
               vista.setVisible(false);
               controladorReservas.vista.setLocationRelativeTo(null);
