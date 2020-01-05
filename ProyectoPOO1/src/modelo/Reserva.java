@@ -41,7 +41,18 @@ public class Reserva {
     this.estado = pEstado;
     this.isExitosa = pIsExitosa;
   }
+
+    public Reserva(Estudiante organizador, String asunto, Date fechaUso, Time horaInicio, Time horaFin, String idSala) {
+        this.organizador = organizador;
+        this.asunto = asunto;
+        this.fechaUso = fechaUso;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.idSala = idSala;
+    }
   
+  
+
   
   public Reserva(int pId, String pAsunto, Date pFechaSolicitud, Date pFechaUso, Time pHoraInicio,
       Time pHoraFin, String pIdSala, String pEstado, boolean pIsExitosa, 
@@ -151,6 +162,14 @@ public class Reserva {
   public boolean getIsExitosa() {
     return isExitosa;
   }
+
+    public Estudiante getOrganizador() {
+        return organizador;
+    }
+
+    public void setOrganizador(Estudiante organizador) {
+        this.organizador = organizador;
+    }
 
 
     
