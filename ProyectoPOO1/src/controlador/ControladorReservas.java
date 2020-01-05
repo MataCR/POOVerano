@@ -49,7 +49,7 @@ public class ControladorReservas implements ActionListener{
 
   
   public void actionPerformed(ActionEvent e) {    
-    //try{
+    try{
       switch(e.getActionCommand()) {
           case "Buscar":
               llenarTabla();
@@ -62,9 +62,9 @@ public class ControladorReservas implements ActionListener{
               break;
           default:
               break;
-      //}
-    //}//catch(Exception x){
-      //JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");
+      }
+    }catch(Exception x){
+      JOptionPane.showMessageDialog(null, "Error con el ingreso de datos");
    }
   }  
    
