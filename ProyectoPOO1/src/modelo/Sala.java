@@ -97,6 +97,18 @@ public class Sala {
     this.califacion = pCalifacion;
   }
   
-  
+    public boolean equalsSala(Object o){
+    if (this == o){
+      return true;
+    }
+    if (o == null){
+      return false;
+    }
+    if (getClass() != o.getClass()){
+      return false;
+    }
+    Sala sala = (Sala) o;
+    return idSala.equals(sala.idSala);
+  }
   
 }
