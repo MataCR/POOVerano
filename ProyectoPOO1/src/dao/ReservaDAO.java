@@ -53,9 +53,10 @@ public class ReservaDAO {
   }
 
 
-  public int validarUsuario() throws SQLException,
+  public int validarUsuario(int carnet) throws SQLException,
           ClassNotFoundException{
-      resultadoConsulta = ConexionSQL.createConsult("exec validarEstudiante;"); 
+      resultadoConsulta = ConexionSQL.createConsult("exec validarEstudiante "
+        +carnet+";");
       int bandera = 0;
       while (resultadoConsulta.next()){
           bandera = resultadoConsulta.getInt(1);        
@@ -91,5 +92,18 @@ public class ReservaDAO {
       recursos.add(recurso);
     }
     return recursos;
+  }
+  
+  
+  public ArrayList<String> cargarComboSalasReservas()throws SQLException,
+      ClassNotFoundException{
+    resultadoConsulta = ConexionSQL.createConsult("exec salasDisp "+";");
+    ArrayList<String> salas = new ArrayList<String>();
+    while (resultadoConsulta.next()) {
+       
+      String idSala = resultadoConsulta.getString(1);
+      salas.add(idSala);
+    }
+    return salas;
   }
 }
