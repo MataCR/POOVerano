@@ -27,6 +27,7 @@ import modelo.Sala;
 import vista.AgregarParticipantes;
 import vista.CrearReserva;
 import vista.Menu;
+import vista.Reporte;
 
 /**
  *
@@ -134,8 +135,13 @@ public class ControladorReservas implements ActionListener{
             System.out.println(horaInicio+"c"+horaFin);
            String idSala = vista.comboSalas.getSelectedItem().toString();
            System.out.println(idSala);
-           Reserva reserva = new Reserva(estudiante, asunto, fechaUso, horaInicio,horaFin, idSala);
-           dao.agregarReserva(reserva);         
+           modelo = new Reserva(estudiante, asunto, fechaUso, horaInicio,horaFin, idSala);
+           dao.agregarReserva(modelo);
+           AgregarParticipantes vistaParticipantes = new AgregarParticipantes();
+           ControladorParticipantes controlador = new ControladorParticipantes(vistaParticipantes);
+           controlador.vista.setVisible(true);
+           vista.setVisible(false);
+           controlador.vista.setLocationRelativeTo(null);           
         }else{
            JOptionPane.showMessageDialog(null, "Usuario no registrado");
         }
